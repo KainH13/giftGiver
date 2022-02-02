@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -15,6 +16,6 @@ app.use(express.json(), express.urlencoded({ extended: true }));
 
 // project specific requirements
 require("./config/mongoose.config");
-// require("./routes/pet.routes")(app);
+require("./routes/user.routes")(app);
 
 app.listen(port, () => console.log(`Listening on port: ${port}`));

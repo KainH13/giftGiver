@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const db = "giftGiverDB";
+const db = process.env.DB_NAME;
 
 mongoose
     .connect(`mongodb://localhost/${db}`, {
