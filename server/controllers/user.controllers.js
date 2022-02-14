@@ -7,13 +7,16 @@ module.exports = {
         // setting up a new instance of the user model using the request body
         const user = new User(req.body);
 
-        user.save().then((newUser) => {
-            console.log(newUser);
-            console.log("Successfully Registered");
-            res.json({
-                successMessage: "Thank you for registering",
-                user: newUser,
-            })}).catch((err) => {
+        user.save()
+            .then((newUser) => {
+                console.log(newUser);
+                console.log("Successfully Registered");
+                res.json({
+                    successMessage: "Thank you for registering",
+                    user: newUser,
+                });
+            })
+            .catch((err) => {
                 console.log("Registration unsuccessful");
                 res.status(400).json(err);
             });
@@ -81,6 +84,21 @@ module.exports = {
         });
     },
 
+    getAllUsers: (req, res) => {
+        User.find()
+            // returns all Users sorted alphabetically by type
+            .collation({ locale: "en", strength: 2 })
+            .sort({ firstName: 1 })
+            .then((allUsers) => {
+                console.log(allUsers);
+                res.json(allUsers);
+            })
+            .catch((err) => {
+                console.log("Find All failed");
+                res.status(400).json(err);
+            });
+    },
+
     getOneUser: (req, res) => {
         User.findOne({ _id: req.params.id })
             .then((oneUser) => {
@@ -89,6 +107,33 @@ module.exports = {
             })
             .catch((err) => {
                 console.log(err);
+                res.status(400).json(err);
+            });
+    },
+
+    updateUser: (req, res) => {
+        User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+            new: true,
+            runValidators: true,
+        })
+            .then((updatedUser) => {
+                console.log(updatedUser);
+                res.json(updatedUser);
+            })
+            .catch((err) => {
+                console.log("Update Failed");
+                res.status(400).json(err);
+            });
+    },
+
+    deleteUser: (req, res) => {
+        User.deleteOne({ _id: req.params.id })
+            .then((result) => {
+                console.log(result);
+                res.json(result);
+            })
+            .catch((err) => {
+                console.log("Delete failed");
                 res.status(400).json(err);
             });
     },
