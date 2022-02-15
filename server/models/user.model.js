@@ -7,7 +7,6 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: [true, "First name is required."],
             minlength: [2, "First name must be at least 2 characters long."],
-            unique: true, // throws 'duplicate key error' code 11000 if name already exists in the db
         },
         lastName: {
             type: String,
@@ -36,8 +35,8 @@ const UserSchema = new mongoose.Schema(
         cards: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Card"
-            }
+                ref: "Card",
+            },
         ],
         comments: [
             {

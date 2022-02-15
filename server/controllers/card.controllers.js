@@ -37,15 +37,18 @@ module.exports = {
             complete: true,
         });
 
+        console.log(decodedJWT.payload);
+
         newCardObject.createdBy = decodedJWT.payload.id;
 
-        newCardObject.save()
+        newCardObject
+            .save()
             .then((newlyCreatedCard) => {
                 console.log(newlyCreatedCard);
 
                 // push comment into comments field of user that created it
                 User.findOneAndUpdate(
-                    newlyCreatedCard.createdBy,
+                    { _id: newlyCreatedCard.createdBy },
                     {
                         $addToSet: { cards: newlyCreatedCard._id },
                     },

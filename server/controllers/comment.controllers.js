@@ -33,7 +33,7 @@ module.exports = {
 
                 // push comment into comments field of user that created it
                 User.findOneAndUpdate(
-                    req.body.createdFor,
+                    { _id: req.body.createdFor },
                     {
                         $addToSet: { comments: newlyCreatedComment._id },
                     },
@@ -42,7 +42,6 @@ module.exports = {
                         useFindAndModify: true,
                     }
                 )
-                    .populate("comments", "name body likes _id")
                     .then((userToUpdate) => {
                         console.log(userToUpdate);
                         res.json(newlyCreatedComment);
