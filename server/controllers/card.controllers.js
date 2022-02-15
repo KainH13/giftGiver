@@ -1,5 +1,6 @@
 const Card = require("../models/card.model");
 const User = require("../models/user.model");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
     findAllCards: (req, res) => {
@@ -30,13 +31,21 @@ module.exports = {
     },
 
     createCard: (req, res) => {
-        Card.create(req.body)
+        const newCardObject = new Card(req.body);
+
+        const decodedJWT = jwt.decode(req.cookies.usertoken, {
+            complete: true,
+        });
+
+        newCardObject.createdBy = decodedJWT.payload.id;
+
+        newCardObject.save()
             .then((newlyCreatedCard) => {
                 console.log(newlyCreatedCard);
 
                 // push comment into comments field of user that created it
                 User.findOneAndUpdate(
-                    req.body.createdFor,
+                    newlyCreatedCard.createdBy,
                     {
                         $addToSet: { cards: newlyCreatedCard._id },
                     },
@@ -45,7 +54,10 @@ module.exports = {
                         useFindAndModify: true,
                     }
                 )
-                    .populate("cards", "firstName lastName interests customFields _id")
+                    .populate(
+                        "cards",
+                        "firstName lastName interests customFields _id"
+                    )
                     .then((userToUpdate) => {
                         console.log(userToUpdate);
                         res.json(newlyCreatedCard);
