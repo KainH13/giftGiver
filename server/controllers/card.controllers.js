@@ -34,9 +34,9 @@ module.exports = {
             .then((newlyCreatedCard) => {
                 console.log(newlyCreatedCard);
 
-                // push card into cards field of user that created it
+                // push comment into comments field of user that created it
                 User.findOneAndUpdate(
-                    req.body.createdBy,
+                    req.body.createdFor,
                     {
                         $addToSet: { cards: newlyCreatedCard._id },
                     },
@@ -52,11 +52,13 @@ module.exports = {
                     })
                     .catch((err) => {
                         console.log("Create failed");
+                        console.log("Push to user failed.");
                         res.status(400).json(err);
                     });
             })
             .catch((err) => {
                 console.log("Create failed");
+                console.log("Initial creation failed.");
                 res.status(400).json(err);
             });
     },

@@ -7,12 +7,12 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const port = 8000;
 
-// enabling cookie parser
-app.use(cookieParser());
-
 // enabling cors and json
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json(), express.urlencoded({ extended: true }));
+
+// enabling cookie parser to decode contents of cookies
+app.use(cookieParser());
 
 // project specific requirements
 require("./config/mongoose.config");
