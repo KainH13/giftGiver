@@ -6,13 +6,13 @@ const UserSchema = new mongoose.Schema(
         firstName: {
             type: String,
             required: [true, "First name is required."],
-            minlength: [3, "First name must be at least 3 characters long."],
+            minlength: [2, "First name must be at least 2 characters long."],
             unique: true, // throws 'duplicate key error' code 11000 if name already exists in the db
         },
         lastName: {
             type: String,
             required: [true, "Last name is required."],
-            minlength: [3, "Last name must be at least 3 characters long."],
+            minlength: [2, "Last name must be at least 2 characters long."],
         },
         email: {
             type: String,

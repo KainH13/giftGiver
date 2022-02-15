@@ -17,5 +17,7 @@ app.use(express.json(), express.urlencoded({ extended: true }));
 // project specific requirements
 require("./config/mongoose.config");
 require("./routes/user.routes")(app);
+require("./routes/card.routes")(app);
+require("./routes/comment.routes")(app);
 
 app.listen(port, () => console.log(`Listening on port: ${port}`));
