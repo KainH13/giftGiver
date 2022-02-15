@@ -33,9 +33,18 @@ const UserSchema = new mongoose.Schema(
         customFields: {
             type: Array,
         },
-        comments: {
-            type: Array,
-        },
+        cards: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Card"
+            }
+        ],
+        comments: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Comment",
+            },
+        ],
     },
     { timestamps: true }
 );

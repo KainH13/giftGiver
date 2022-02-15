@@ -1,4 +1,5 @@
 const Card = require("../models/card.model");
+const User = require("../models/user.model");
 
 module.exports = {
     findAllCards: (req, res) => {
@@ -32,7 +33,27 @@ module.exports = {
         Card.create(req.body)
             .then((newlyCreatedCard) => {
                 console.log(newlyCreatedCard);
-                res.json(newlyCreatedCard);
+
+                // push card into cards field of user that created it
+                User.findOneAndUpdate(
+                    req.body.createdBy,
+                    {
+                        $addToSet: { cards: newlyCreatedCard._id },
+                    },
+                    {
+                        new: true,
+                        useFindAndModify: true,
+                    }
+                )
+                    .populate("cards", "firstName lastName interests customFields _id")
+                    .then((userToUpdate) => {
+                        console.log(userToUpdate);
+                        res.json(newlyCreatedCard);
+                    })
+                    .catch((err) => {
+                        console.log("Create failed");
+                        res.status(400).json(err);
+                    });
             })
             .catch((err) => {
                 console.log("Create failed");
@@ -66,4 +87,4 @@ module.exports = {
                 res.status(400).json(err);
             });
     },
-}
+};

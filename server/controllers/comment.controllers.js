@@ -1,4 +1,5 @@
 const Comment = require("../models/comment.model");
+const User = require("../models/user.model");
 
 module.exports = {
     findAllComments: (req, res) => {
@@ -29,10 +30,32 @@ module.exports = {
         Comment.create(req.body)
             .then((newlyCreatedComment) => {
                 console.log(newlyCreatedComment);
-                res.json(newlyCreatedComment);
+
+                // push comment into comments field of user that created it
+                User.findOneAndUpdate(
+                    req.body.createdFor,
+                    {
+                        $addToSet: { comments: newlyCreatedComment._id },
+                    },
+                    {
+                        new: true,
+                        useFindAndModify: true,
+                    }
+                )
+                    .populate("comments", "name body likes _id")
+                    .then((userToUpdate) => {
+                        console.log(userToUpdate);
+                        res.json(newlyCreatedComment);
+                    })
+                    .catch((err) => {
+                        console.log("Create failed");
+                        console.log("Push to user failed.");
+                        res.status(400).json(err);
+                    });
             })
             .catch((err) => {
                 console.log("Create failed");
+                console.log("Initial creation failed.");
                 res.status(400).json(err);
             });
     },
@@ -42,12 +65,13 @@ module.exports = {
             new: true,
             runValidators: true,
         })
-            .then((updatedComment) => {
-                console.log(updatedComment);
-                res.json(updatedComment);
+            .populate("createdFor", "firstName lastName")
+            .then((likeAdded) => {
+                console.log("comment liked successfully");
+                res.json(likeAdded);
             })
             .catch((err) => {
-                console.log("Update failed");
+                console.log(err);
                 res.status(400).json(err);
             });
     },
@@ -63,4 +87,4 @@ module.exports = {
                 res.status(400).json(err);
             });
     },
-}
+};
