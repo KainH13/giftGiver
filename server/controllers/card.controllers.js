@@ -20,7 +20,7 @@ module.exports = {
 
     // secure way to get all cards for a user, without passing ID around
     findAllCardsByUser: (req, res) => {
-        if (req.jwtpayload.username !== req.params.username) {
+        if (req.jwtpayload.email !== req.params.email) {
             User.findOne({ email: req.params.email })
                 .then((userNotLoggedIn) => {
                     Card.find({ createdBy: userNotLoggedIn._id })
