@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 // bootstrap
@@ -12,14 +12,29 @@ import Edit from "./views/Edit";
 import User from "./views/User";
 
 function App() {
+    const [authenticated, setAuthenticated] = useState(false);
+
+    const requireAuth = (nextState, replace, next) => {
+        if (!authenticated) {
+            replace({
+                pathname: "/login",
+                state: { nextPathname: nextState.location.pathname },
+            });
+        }
+        next();
+    };
+
     return (
         <div className="App">
             <Routes>
-                <Route path="/login" element={ <Login /> } />
-                <Route path="/home" element={ <Home /> } />
-                <Route path="/connections" element={ <Connections /> } />
-                <Route path="/edit/:id" element={ <Edit /> } />
-                <Route path="/user/:id" element={ <User /> } />
+                <Route
+                    path="/login"
+                    element={<Login setAuthenticated={setAuthenticated} />}
+                />
+                <Route path="/home" element={<Home />} onEnter={requireAuth} />
+                <Route path="/connections" element={<Connections />} onEnter={requireAuth} />
+                <Route path="/edit/:id" element={<Edit />} onEnter={requireAuth} />
+                <Route path="/user/:id" element={<User />} onEnter={requireAuth} />
             </Routes>
         </div>
     );

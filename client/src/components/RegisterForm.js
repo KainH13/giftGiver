@@ -1,31 +1,75 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 const RegisterForm = (props) => {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    // error handling
+    const [confirmReg, setConfirmReg] = useState("");
+    const [errors, setErrors] = useState({});
 
-    const submitHandler = (e) => {
+    // saving form inputs
+    const [user, setUser] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
+
+    const handleChange = (e) => {
+        setUser({
+            ...user,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const register = (e) => {
         e.preventDefault();
-    }
+
+        axios
+            .post("http://localhost:8000/api/users/register", user, {
+                withCredentials: true,
+            })
+            .then((res) => {
+                console.log(res.data);
+                setUser({
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    password: "",
+                    confirmPassword: "",
+                });
+                setConfirmReg("Thank you for Registering, you can now log in!");
+                setErrors({});
+            })
+            .catch((err) => {
+                console.log(err);
+                setErrors(err.response.data.errors);
+            });
+    };
 
     return (
         <div className="col card col-5 p-2 m-5">
             <h2 className="text-primary">Register</h2>
-            <form onSubmit={submitHandler}>
+            {confirmReg ? (
+                <h4 className="text-center">{confirmReg}</h4>
+            ): null}
+            <form onSubmit={register}>
                 <div className="form-group d-flex flex-column mb-3">
                     <label htmlFor="firstName">First Name:</label>
                     <input
                         className="form-control"
                         type="text"
                         name="firstName"
-                        value={firstName}
+                        value={user.firstName}
                         onChange={(e) => {
-                            setFirstName(e.target.value);
+                            handleChange(e);
                         }}
                     />
+                    {errors.firstName ? (
+                        <div className="alert alert-danger my-1">
+                            {errors.firstName.message}
+                        </div>
+                    ) : null}
                 </div>
                 <div className="form-group d-flex flex-column mb-3">
                     <label htmlFor="lastName">Last Name:</label>
@@ -33,11 +77,16 @@ const RegisterForm = (props) => {
                         className="form-control"
                         type="text"
                         name="lastName"
-                        value={lastName}
+                        value={user.lastName}
                         onChange={(e) => {
-                            setLastName(e.target.value);
+                            handleChange(e);
                         }}
                     />
+                    {errors.lastName ? (
+                        <div className="alert alert-danger my-1">
+                            {errors.lastName.message}
+                        </div>
+                    ) : null}
                 </div>
                 <div className="form-group d-flex flex-column mb-3">
                     <label htmlFor="email">Email:</label>
@@ -45,11 +94,16 @@ const RegisterForm = (props) => {
                         className="form-control"
                         type="email"
                         name="email"
-                        value={email}
+                        value={user.email}
                         onChange={(e) => {
-                            setEmail(e.target.value);
+                            handleChange(e);
                         }}
                     />
+                    {errors.email ? (
+                        <div className="alert alert-danger my-1">
+                            {errors.email.message}
+                        </div>
+                    ) : null}
                 </div>
                 <div className="form-group d-flex flex-column mb-3">
                     <label htmlFor="password">Password:</label>
@@ -57,23 +111,33 @@ const RegisterForm = (props) => {
                         className="form-control"
                         type="password"
                         name="password"
-                        value={password}
+                        value={user.password}
                         onChange={(e) => {
-                            setPassword(e.target.value);
+                            handleChange(e);
                         }}
                     />
+                    {errors.password ? (
+                        <div className="alert alert-danger my-1">
+                            {errors.password.message}
+                        </div>
+                    ) : null}
                 </div>
                 <div className="form-group d-flex flex-column mb-3">
-                    <label htmlFor="confirm_password">Confirm Password:</label>
+                    <label htmlFor="confirmPassword">Confirm Password:</label>
                     <input
                         className="form-control"
                         type="password"
-                        name="confirm_password"
-                        value={confirmPassword}
+                        name="confirmPassword"
+                        value={user.confirmPassword}
                         onChange={(e) => {
-                            setConfirmPassword(e.target.value);
+                            handleChange(e);
                         }}
                     />
+                    {errors.confirmPassword ? (
+                        <div className="alert alert-danger my-1">
+                            {errors.confirmPassword.message}
+                        </div>
+                    ) : null}
                 </div>
                 <input
                     className="btn btn-outline-primary mb-3"

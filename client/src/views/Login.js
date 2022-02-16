@@ -5,6 +5,8 @@ import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 
 const Login = (props) => {
+    const { setAuthenticated } = props;
+
     return (
         <div>
             <div className="navbar d-flex justify-content-start align-items-start">
@@ -13,8 +15,8 @@ const Login = (props) => {
             </div>
             <h1 className="text-center">Welcome</h1>
             <div className="row">
-                <LoginForm />
                 <RegisterForm />
+                <LoginForm setAuthenticated={setAuthenticated} />
             </div>
         </div>
     );
