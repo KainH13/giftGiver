@@ -109,6 +109,7 @@ module.exports = {
             .catch((err) => {
                 console.log("Create failed");
                 console.log("Initial creation failed.");
+                console.log(err);
                 res.status(400).json(err);
             });
     },
