@@ -18,6 +18,38 @@ module.exports = {
             });
     },
 
+    // secure way to get all cards for a user, without passing ID around
+    findAllCardsByUser: (req, res) => {
+        if (req.jwtpayload.username !== req.params.username) {
+            User.findOne({ email: req.params.email })
+                .then((userNotLoggedIn) => {
+                    Card.find({ createdBy: userNotLoggedIn._id })
+                        .then((allCardsFromUser) => {
+                            console.log(allCardsFromUser);
+                            res.json(allCardsFromUser);
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            res.status(400).json(err);
+                        });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(400).json(err);
+                });
+        } else {
+            Card.find({ createdBy: req.jwtpayload.id })
+                .then((allCardsFromLoggedInUser) => {
+                    console.log(allCardsFromLoggedInUser);
+                    res.json(allCardsFromLoggedInUser);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(400).json(err);
+                });
+        }
+    },
+
     findOneCard: (req, res) => {
         Card.findOne({ _id: req.params.id })
             .then((oneCard) => {
@@ -33,13 +65,16 @@ module.exports = {
     createCard: (req, res) => {
         const newCardObject = new Card(req.body);
 
-        const decodedJWT = jwt.decode(req.cookies.usertoken, {
-            complete: true,
-        });
+        // more verbose alternative without setting jwtpayload to payload in jwt.config.js
+        // const decodedJWT = jwt.decode(req.cookies.usertoken, {
+        //     complete: true,
+        // });
 
-        console.log(decodedJWT.payload);
+        // console.log(decodedJWT.payload);
 
-        newCardObject.createdBy = decodedJWT.payload.id;
+        // newCardObject.createdBy = decodedJWT.payload.id;
+
+        newCardObject.createdBy = req.jwtpayload.id;
 
         newCardObject
             .save()
