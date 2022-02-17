@@ -30,8 +30,8 @@ const Navbar = (props) => {
     return (
         <nav className="navbar navbar-light bg-light">
             <div className="container-fluid justify-content-start">
-                <h1 className="navbar-brand">Gift It :)</h1>
-                <div className="nav">
+                <h1 className="navbar-brand m-1">Gift It :)</h1>
+                <div className="nav m-1">
                     <Link className="nav-link" to="/home">
                         Home
                     </Link>
