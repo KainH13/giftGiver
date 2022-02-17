@@ -1,9 +1,16 @@
 import React from "react";
 
 // components
+import Navbar from "../components/Navbar";
 
 const Home = (props) => {
-    return <div>Home</div>;
+    const { userEmail, setUserEmail, setAuthenticated } = props;
+
+    return (
+        <div>
+            <Navbar userEmail={userEmail} setAuthenticated={setAuthenticated} setUserEmail={setUserEmail} />
+        </div>
+    );
 };
 
 export default Home;

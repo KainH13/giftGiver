@@ -5,7 +5,7 @@ import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 
 const Login = (props) => {
-    const { setAuthenticated } = props;
+    const { setUserEmail } = props;
 
     return (
         <div>
@@ -16,7 +16,7 @@ const Login = (props) => {
             <h1 className="text-center">Welcome</h1>
             <div className="row">
                 <RegisterForm />
-                <LoginForm setAuthenticated={setAuthenticated} />
+                <LoginForm setUserEmail={setUserEmail} />
             </div>
         </div>
     );

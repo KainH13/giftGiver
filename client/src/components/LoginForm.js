@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = (props) => {
-    const { setAuthenticated } = props;
+    const { setUserEmail } = props;
 
     const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ const LoginForm = (props) => {
             .then((res) => {
                 console.log("response: ", res);
                 console.log("response data: ", res.data);
-                setAuthenticated(true);
+                setUserEmail(email);
                 navigate("/home");
             })
             .catch((err) => {

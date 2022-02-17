@@ -102,7 +102,7 @@ module.exports = {
     },
 
     getOneUser: (req, res) => {
-        User.findOne({ _id: req.params.id })
+        User.findOne({ email: req.params.email })
             .then((oneUser) => {
                 console.log(oneUser);
                 res.json(oneUser);
@@ -114,7 +114,7 @@ module.exports = {
     },
 
     updateUser: (req, res) => {
-        User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        User.findOneAndUpdate({ email: req.params.email }, req.body, {
             new: true,
             runValidators: true,
         })
