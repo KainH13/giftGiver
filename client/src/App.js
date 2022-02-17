@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 // bootstrap
@@ -14,54 +14,48 @@ import User from "./views/User";
 function App() {
     const [userEmail, setUserEmail] = useState("");
 
-    const requireAuth = (nextState, replace, next) => {
-        if (!userEmail) {
-            replace({
-                pathname: "/login",
-                state: { nextPathname: nextState.location.pathname },
-            });
-        }
-        next();
-    };
-
     return (
         <div className="App">
             <Routes>
                 <Route
                     path="/login"
+                    element={<Login setUserEmail={setUserEmail} />}
+                />
+                <Route
+                    path="/home"
                     element={
-                        <Login
+                        <Home
+                            userEmail={userEmail}
                             setUserEmail={setUserEmail}
                         />
                     }
                 />
                 <Route
-                    path="/home"
-                    element={<Home />}
-                    onEnter={requireAuth}
-                    userEmail={userEmail}
-                    setUserEmail={setUserEmail}
-                />
-                <Route
                     path="/connections"
-                    element={<Connections />}
-                    onEnter={requireAuth}
-                    userEmail={userEmail}
-                    setUserEmail={setUserEmail}
+                    element={
+                        <Connections
+                            userEmail={userEmail}
+                            setUserEmail={setUserEmail}
+                        />
+                    }
                 />
                 <Route
                     path="/edit/:email"
-                    element={<Edit />}
-                    onEnter={requireAuth}
-                    userEmail={userEmail}
-                    setUserEmail={setUserEmail}
+                    element={
+                        <Edit
+                            userEmail={userEmail}
+                            setUserEmail={setUserEmail}
+                        />
+                    }
                 />
                 <Route
                     path="/user/:email"
-                    element={<User />}
-                    onEnter={requireAuth}
-                    userEmail={userEmail}
-                    setUserEmail={setUserEmail}
+                    element={
+                        <User
+                            userEmail={userEmail}
+                            setUserEmail={setUserEmail}
+                        />
+                    }
                 />
             </Routes>
         </div>

@@ -20,11 +20,11 @@ const Navbar = (props) => {
             .then((res) => {
                 console.log(res);
                 setUserEmail("");
+                navigate("/login");
             })
             .catch((err) => {
                 console.log(err);
             });
-        navigate("/login");
     };
 
     return (
