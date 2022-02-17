@@ -48,7 +48,7 @@ const RegisterForm = (props) => {
     };
 
     return (
-        <div className="col card col-5 p-2 m-5">
+        <div className="col card m-2">
             <h2 className="text-primary">Register</h2>
             {confirmReg ? (
                 <h4 className="text-center">{confirmReg}</h4>
