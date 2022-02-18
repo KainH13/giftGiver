@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema(
             minlength: [8, "Password must be 8 characters or longer."],
         },
         interests: {
-            type: String,
+            type: Array,
         },
         customFields: {
             type: Array,
