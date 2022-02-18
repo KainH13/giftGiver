@@ -57,10 +57,10 @@ const Home = (props) => {
                 setUserEmail={setUserEmail}
             />
             <div className="row m-2">
-                <div className="col-4">
+                <div className="col-5">
                     <UserCard user={user} />
                 </div>
-                <div className="col-8"></div>
+                <div className="col-7"></div>
             </div>
         </div>
     );
