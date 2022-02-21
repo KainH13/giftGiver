@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const UserInfoForm = (props) => {
   const { user, setUser, onSubmitAction, errors } = props;
@@ -22,13 +22,16 @@ const UserInfoForm = (props) => {
     setUser(editedUser);
   };
 
+  // store and set label for new field
+  const [newLabel, setNewLabel] = useState("");
+
   // add blank custom field that's ready for user input
   const addCustomField = (e) => {
     let editedUser = { ...user };
     editedUser.customFields = [
       ...editedUser.customFields,
       {
-        label: "",
+        label: newLabel,
         body: "",
       },
     ];
@@ -45,7 +48,6 @@ const UserInfoForm = (props) => {
   return (
     <div className="col card m-2">
       {console.log(user)}
-      {console.log(user.firstName)}
       <h2 className="text-primary text-center">Edit User Profile</h2>
       <form onSubmit={submitHandler} className="px-3">
         <div className="form-group d-flex flex-column mb-3">
@@ -97,7 +99,7 @@ const UserInfoForm = (props) => {
           ? user.customFields.map((field, index) => {
               return (
                 <div className="form-group d-flex flex-column mb-3" key={index}>
-                  <label htmlFor={field.label}>Interests:</label>
+                  <label htmlFor={field.label}>{field.label}</label>
                   <input
                     className="form-control"
                     type="text"
@@ -109,13 +111,20 @@ const UserInfoForm = (props) => {
               );
             })
           : null}
-        <div className="form-group">
-          <button
-            className="btn btn-outline-primary mb-3"
+        <div className="form-group d-flex flex-column mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="New Field Name"
+            name="newFieldName"
+            onChange={(e) => setNewLabel(e.target.value)}
+          />
+          <p
+            className="btn btn-outline-primary my-3"
             onClick={addCustomField}
           >
             Add Custom Field
-          </button>
+          </p>
         </div>
         <input
           className="btn btn-outline-primary mb-3"
