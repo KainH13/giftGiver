@@ -4,18 +4,18 @@ import { useNavigate } from "react-router-dom";
 // components
 
 const User = (props) => {
-    const { userEmail } = props;
+  const { userEmail } = props;
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        // check for user authentication via userEmail state
-        if (userEmail === "") {
-            navigate("/login");
-        }
-    });
+  useEffect(() => {
+    // check for user authentication via userEmail state
+    if (userEmail === "") {
+      navigate("/login");
+    }
+  });
 
-    return <div>User</div>;
+  return <div>User</div>;
 };
 
 export default User;
