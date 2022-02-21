@@ -13,13 +13,12 @@ const UserInfoForm = (props) => {
   // customField change handler
   const customFieldChangeHandler = (e) => {
     let editedUser = { ...user };
-    editedUser.customFields = [
-      ...editedUser.customFields,
-      {
-        label: e.target.name,
-        body: e.target.value,
-      },
-    ];
+    // need to find the right custom field to edit
+    for (let i = 0; i < editedUser.customFields.length; i++) {
+      if (editedUser.customFields[i].label === e.target.name) {
+        editedUser.customFields[i].body = e.target.value;
+      }
+    }
     setUser(editedUser);
   };
 
@@ -111,7 +110,10 @@ const UserInfoForm = (props) => {
             })
           : null}
         <div className="form-group">
-          <button className="btn btn-outline-primary mb-3" onClick={addCustomField}>
+          <button
+            className="btn btn-outline-primary mb-3"
+            onClick={addCustomField}
+          >
             Add Custom Field
           </button>
         </div>
