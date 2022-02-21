@@ -2,6 +2,10 @@ import React, { useState } from "react";
 
 const UserInfoForm = (props) => {
   const { user, setUser, onSubmitAction, errors } = props;
+  
+  // store and set label for new field
+  const [newLabel, setNewLabel] = useState("");
+
 
   // string field change handler
   const onChangeHandler = (e) => {
@@ -22,9 +26,6 @@ const UserInfoForm = (props) => {
     setUser(editedUser);
   };
 
-  // store and set label for new field
-  const [newLabel, setNewLabel] = useState("");
-
   // add blank custom field that's ready for user input
   const addCustomField = (e) => {
     let editedUser = { ...user };
@@ -36,9 +37,20 @@ const UserInfoForm = (props) => {
       },
     ];
     setUser(editedUser);
+    setNewLabel("");
   };
 
-  // need custom field change handler
+  // remove a custom field
+  const removeField = (fieldLabel) => {
+    let editedUser = { ...user };
+    // find field by label
+    for (let i = 0; i < editedUser.customFields.length; i++) {
+      if (editedUser.customFields[i].label === fieldLabel) {
+        editedUser.customFields.splice(i);
+      }
+    }
+    setUser(editedUser);
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -100,31 +112,50 @@ const UserInfoForm = (props) => {
               return (
                 <div className="form-group d-flex flex-column mb-3" key={index}>
                   <label htmlFor={field.label}>{field.label}</label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    name={field.label}
-                    value={field.body}
-                    onChange={customFieldChangeHandler}
-                  />
+                  <div className="row">
+                    <div className="col-11">
+                      <input
+                        className="form-control"
+                        type="text"
+                        name={field.label}
+                        value={field.body}
+                        onChange={customFieldChangeHandler}
+                      />
+                    </div>
+                    <div className="col-1">
+                      <div
+                        className="btn btn-outline-danger"
+                        onClick={(e) => removeField(field.label)}
+                      >
+                        X
+                      </div>
+                    </div>
+                  </div>
                 </div>
               );
             })
           : null}
         <div className="form-group d-flex flex-column mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="New Field Name"
-            name="newFieldName"
-            onChange={(e) => setNewLabel(e.target.value)}
-          />
-          <p
-            className="btn btn-outline-primary my-3"
-            onClick={addCustomField}
-          >
-            Add Custom Field
-          </p>
+          <div className="row align-items-center">
+            <div className="col-10">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="New Field Name"
+                name="newFieldName"
+                value={newLabel}
+                onChange={(e) => setNewLabel(e.target.value)}
+              />
+            </div>
+            <div className="col-2">
+              <div
+                className="btn btn-outline-primary my-3"
+                onClick={addCustomField}
+              >
+                Add Custom Field
+              </div>
+            </div>
+          </div>
         </div>
         <input
           className="btn btn-outline-primary mb-3"
