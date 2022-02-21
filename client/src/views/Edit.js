@@ -1,10 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // components
+import Navbar from "../components/Navbar";
+import UserInfoForm from "../components/UserInfoForm";
 
 const Edit = (props) => {
-    const {userEmail} = props;
+    const { userEmail, setUserEmail } = props;
+
+    // saving form inputs
+    const [user, setUser] = useState({
+        firstName: "",
+        lastName: "",
+        interests: "",
+        customFields: [],
+    });
+    // validation errors
+    const [errors, setErrors] = useState([]);
 
     const navigate = useNavigate();
 
@@ -13,9 +25,16 @@ const Edit = (props) => {
         if (userEmail === "") {
             navigate("/login");
         }
+        console.log(user);
+        console.log(user.firstName);
     });
 
-    return <div>Edit</div>;
+    return (
+        <div>
+          <Navbar userEmail={userEmail} setUserEmail={setUserEmail} />
+          <UserInfoForm user={user} setUser={setUser} errors={errors} />
+        </div>
+    );
 };
 
 export default Edit;

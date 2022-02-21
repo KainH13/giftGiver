@@ -4,9 +4,11 @@ const CommentSchema = new mongoose.Schema(
     {
         name: {
             type: String,
+            default: "",
         },
         body: {
             type: String,
+            default: "",
         },
         likes: {
             type: Number,

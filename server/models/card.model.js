@@ -14,6 +14,7 @@ const CardSchema = new mongoose.Schema(
         },
         interests: {
             type: String,
+            default: "",
         },
         customFields: {
             type: Array,

@@ -10,9 +10,7 @@ const UserCard = (props) => {
                     {user.firstName} {user.lastName}
                 </h5>
                 <h4 className="card-subtitle mb-2 text-muted">{user.email}</h4>
-                {user.interests ? (
-                    <p className="card-text">Interests: {user.interests[0]}</p>
-                ) : null}
+                <p className="card-text">Interests: {user.interests[0]}</p>
                 {user.customFields
                     ? user.customFields.map((field, index) => {
                             return (
