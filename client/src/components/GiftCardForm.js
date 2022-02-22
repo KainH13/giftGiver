@@ -171,7 +171,7 @@ const GiftCardForm = (props) => {
           </div>
           <div className="col-2">
             {action === "Edit" ? (
-              <div className="btn btn-outline-danger" onClick={(e) => deleteAction}>Delete</div>
+              <div className="btn btn-outline-danger" onClick={(e) => deleteAction(card)}>Delete</div>
             ) : null}
           </div>
         </div>

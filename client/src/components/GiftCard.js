@@ -30,23 +30,23 @@ const GiftCard = (props) => {
       });
   };
 
-  // delete card in db and remove from user cards list so no refresh is required to see the change
-  const deleteCard = () => {
-    axios.delete(`http://localhost:8000/api/cards/${targetCard._id}`, {
-      withCredentials: true,
-    })
-      .then((res) => {
-        console.log(res.data);
-        let editedUser = { ...user };
-        console.log(editedUser.cards.length);
-        for (let i = 0; i < editedUser.cards.length; i++) {
-          if (editedUser.card[i]._id === targetCard._id) {
-            editedUser.cards.splice(i);
-          }
-        }
-        setUser(editedUser);
-      })
-
+  // delete card in db and remove from user cards list so no refresh is required to see the change BROKEN
+  const deleteCard = (targetCard) => {
+    // remove card from user list so that it can update without a refresh
+    let userCards = [...user.cards];
+    console.log("Editable User Cards: ", userCards.cards);
+    console.log("Target Card: ", targetCard);
+    console.log("User cards length: ", userCards.length);
+    for (let i = 0; i < userCards.length; i++) {
+      if (userCards[i]._id === targetCard._id) {
+        userCards.splice(i);
+        break;
+      }
+    }
+    let editedUser = { ...user };
+    editedUser.cards = userCards;
+    setUser(editedUser);
+    console.log("User after delete:", user);
   };
 
   return (

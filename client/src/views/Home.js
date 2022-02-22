@@ -80,9 +80,9 @@ const Home = (props) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
+        console.log("Newly Created Card: ", res.data);
         // add card to users cards list for display
-        user.cards = [...user.cards, card];
+        user.cards = [...user.cards, res.data];
         // clear form fields out for re-use
         setCard({
           firstName: "",
