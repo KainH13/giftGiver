@@ -5,11 +5,25 @@ import axios from "axios";
 // components
 import Navbar from "../components/Navbar";
 import UserCard from "../components/UserCard";
+import GiftCardForm from "../components/GiftCardForm";
 
 const Home = (props) => {
   const { userEmail, setUserEmail, setAuthenticated } = props;
 
+  // setting state for card creation and update
+  const [card, setCard] = useState({
+    firstName: "",
+    lastName: "",
+    interests: "",
+    customFields: [],
+    createdBy: "",
+  });
+
+  const [errors, setErrors] = useState([]);
+
+  // setting state for displaying user information
   const [user, setUser] = useState({
+    id: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -34,6 +48,7 @@ const Home = (props) => {
       .then((res) => {
         console.log(res.data);
         setUser({
+          id: res.data._id,
           firstName: res.data.firstName,
           lastName: res.data.lastName,
           email: res.data.email,
@@ -43,11 +58,43 @@ const Home = (props) => {
           comments: res.data.comments,
         });
         console.log(user);
+        setCard({
+          firstName: "",
+          lastName: "",
+          interests: "",
+          customFields: [],
+          createdBy: res.data._id,
+        });
+        console.log(card);
       })
       .catch((err) => {
         console.log(err.response.data);
       });
   }, []);
+
+  // card creation
+  const createCard = (card) => {
+    axios
+      .post("http://localhost:8000/api/cards", card, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        // clear form fields out for re-use
+        setCard({
+          firstName: "",
+          lastName: "",
+          interests: "",
+          customFields: [],
+          createdBy: user.id,
+        });
+        setErrors([]);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        setErrors(err.response.data.errors);
+      });
+  };
 
   return (
     <div>
@@ -60,7 +107,15 @@ const Home = (props) => {
         <div className="col-5">
           <UserCard user={user} />
         </div>
-        <div className="col-7"></div>
+        <div className="col-7">
+          <GiftCardForm
+            card={card}
+            setCard={setCard}
+            onSubmitAction={createCard}
+            errors={errors}
+            action="Create"
+          />
+        </div>
       </div>
     </div>
   );

@@ -59,7 +59,6 @@ const UserInfoForm = (props) => {
 
   return (
     <div className="col card m-2">
-      {console.log(user)}
       <h2 className="text-primary text-center">Edit User Profile</h2>
       <form onSubmit={submitHandler} className="px-3">
         <div className="form-group d-flex flex-column mb-3">
