@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // components
 import GiftCard from "./GiftCard";
 
 const GiftCardList = (props) => {
   const { user, setUser } = props;
+
+  const [sorted, setSorted] = useState(false);
 
   return (
     <div className="card p-2">

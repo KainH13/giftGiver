@@ -11,7 +11,7 @@ const ConnectionSearch = (props) => {
 
   // custom sorting function to sort alphabetically by a field in an array of objects
   const dynamicSort = (field) => {
-    let sortOrder = -1;
+    let sortOrder = 1;
 
     if (field[0] === "-") {
       sortOrder = -1;
@@ -32,8 +32,10 @@ const ConnectionSearch = (props) => {
       .get("http://localhost:8000/api/users", { withCredentials: true })
       .then((res) => {
         console.log("All Users: ", res.data);
-        setConnections(res.data);
-        setConnections.sort(dynamicSort("firstName"));
+        // sort connections alphabetically
+        let allUsers = res.data;
+        allUsers.sort(dynamicSort("firstName"));
+        setConnections(allUsers);
       })
       .catch((err) => {
         console.log(err);
