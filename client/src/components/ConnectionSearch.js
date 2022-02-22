@@ -7,7 +7,7 @@ import UserCard from "./UserCard";
 const ConnectionSearch = (props) => {
   const { userEmail } = props;
 
-  const [connections, setConnections] = useState();
+  const [connections, setConnections] = useState([]);
 
   useEffect(() => {
     axios
@@ -23,7 +23,7 @@ const ConnectionSearch = (props) => {
 
   return (
     <div className="card p-2 my-2">
-      <h2 className="text-center">Connections: </h2>
+      <h2>Connections: </h2>
       {connections.map((user, index) => {
         if (user.email !== userEmail) {
           return <UserCard user={user} key={index} />;
