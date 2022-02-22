@@ -35,9 +35,9 @@ const Navbar = (props) => {
           <Link className="nav-link" to="/home">
             Home
           </Link>
-          <Link className="nav-link" to="/connections">
+          {/* <Link className="nav-link" to="/connections">
             Connections
-          </Link>
+          </Link> */}
           <Link className="nav-link" to={`/edit/${userEmail}`}>
             Edit Profile
           </Link>
