@@ -60,42 +60,48 @@ const GiftCardForm = (props) => {
     <div className="col card m-2">
       <h2 className="text-primary text-center">{action} Card</h2>
       <form onSubmit={submitHandler} className="px-3">
-        <div className="form-group d-flex flex-column mb-3">
-          <label htmlFor="firstName">First Name:</label>
-          <input
-            className="form-control"
-            type="text"
-            name="firstName"
-            value={card.firstName}
-            onChange={onChangeHandler}
-          />
-          {errors.firstName ? (
-            <div className="alert alert-danger my-1">
-              {errors.firstName.message}
+        <div className="row">
+          <div className="col">
+            <div className="form-group d-flex flex-column mb-3">
+              <input
+                className="form-control"
+                type="text"
+                name="firstName"
+                placeholder="First Name"
+                value={card.firstName}
+                onChange={onChangeHandler}
+              />
+              {errors.firstName ? (
+                <div className="alert alert-danger my-1">
+                  {errors.firstName.message}
+                </div>
+              ) : null}
             </div>
-          ) : null}
+          </div>
+          <div className="col">
+            <div className="form-group d-flex flex-column mb-3">
+              <input
+                className="form-control"
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
+                value={card.lastName}
+                onChange={onChangeHandler}
+              />
+              {errors.lastName ? (
+                <div className="alert alert-danger my-1">
+                  {errors.lastName.message}
+                </div>
+              ) : null}
+            </div>
+          </div>
         </div>
         <div className="form-group d-flex flex-column mb-3">
-          <label htmlFor="lastName">Last Name:</label>
-          <input
-            className="form-control"
-            type="text"
-            name="lastName"
-            value={card.lastName}
-            onChange={onChangeHandler}
-          />
-          {errors.lastName ? (
-            <div className="alert alert-danger my-1">
-              {errors.lastName.message}
-            </div>
-          ) : null}
-        </div>
-        <div className="form-group d-flex flex-column mb-3">
-          <label htmlFor="interests">Interests:</label>
           <input
             className="form-control"
             type="text"
             name="interests"
+            placeholder="Interests"
             value={card.interests}
             onChange={onChangeHandler}
           />
@@ -150,7 +156,7 @@ const GiftCardForm = (props) => {
                 className="btn btn-outline-primary my-3"
                 onClick={addCustomField}
               >
-                Add Custom Field
+                Add
               </div>
             </div>
           </div>
