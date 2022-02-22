@@ -81,6 +81,8 @@ const Home = (props) => {
       })
       .then((res) => {
         console.log(res.data);
+        // add card to users cards list for display
+        user.cards = [...user.cards, card];
         // clear form fields out for re-use
         setCard({
           firstName: "",
