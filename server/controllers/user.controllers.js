@@ -106,6 +106,8 @@ module.exports = {
 
   getOneUser: (req, res) => {
     User.findOne({ email: req.params.email })
+      .populate("cards", "firstName lastName interests customFields _id")
+      .populate("comments", "name body likes _id")
       .then((oneUser) => {
         console.log(oneUser);
         res.json(oneUser);

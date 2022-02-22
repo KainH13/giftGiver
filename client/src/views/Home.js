@@ -6,6 +6,7 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import UserCard from "../components/UserCard";
 import GiftCardForm from "../components/GiftCardForm";
+import GiftCardList from "../components/GiftCardList";
 
 const Home = (props) => {
   const { userEmail, setUserEmail, setAuthenticated } = props;
@@ -108,13 +109,18 @@ const Home = (props) => {
           <UserCard user={user} />
         </div>
         <div className="col-7">
-          <GiftCardForm
-            card={card}
-            setCard={setCard}
-            onSubmitAction={createCard}
-            errors={errors}
-            action="Create"
-          />
+          <div className="row">
+            <GiftCardForm
+              card={card}
+              setCard={setCard}
+              onSubmitAction={createCard}
+              errors={errors}
+              action="Create"
+            />
+          </div>
+          <div className="row">
+            <GiftCardList user={user} />
+          </div>
         </div>
       </div>
     </div>
