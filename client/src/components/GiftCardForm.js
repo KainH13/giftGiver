@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const GiftCardForm = (props) => {
-  const { card, setCard, onSubmitAction, errors, action } = props;
+  const { card, setCard, onSubmitAction, errors, action, deleteAction } = props;
 
   // store and set label for new fields
   const [newLabel, setNewLabel] = useState("");
@@ -161,11 +161,20 @@ const GiftCardForm = (props) => {
             </div>
           </div>
         </div>
-        <input
-          className="btn btn-outline-primary mb-3"
-          type="submit"
-          value="Save"
-        />
+        <div className="row">
+          <div className="col-10">
+            <input
+              className="btn btn-outline-primary mb-3"
+              type="submit"
+              value="Save"
+            />
+          </div>
+          <div className="col-2">
+            {action === "Edit" ? (
+              <div className="btn btn-outline-danger" onClick={(e) => deleteAction}>Delete</div>
+            ) : null}
+          </div>
+        </div>
       </form>
     </div>
   );

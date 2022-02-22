@@ -121,7 +121,7 @@ const Home = (props) => {
             />
           </div>
           <div className="row">
-            <GiftCardList user={user} />
+            <GiftCardList user={user} setUser={setUser} />
           </div>
         </div>
       </div>
