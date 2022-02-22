@@ -43,8 +43,8 @@ const ConnectionSearch = (props) => {
   }, []);
 
   return (
-    <div className="card p-2 my-2">
-      <h2>Connections: </h2>
+    <div className="card p-2 my-2 shadow">
+      <h2 className="text-muted">Connections: </h2>
       {connections.map((user, index) => {
         if (user.email !== userEmail) {
           return <UserCard user={user} key={index} />;

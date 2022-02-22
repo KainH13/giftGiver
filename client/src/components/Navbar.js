@@ -30,7 +30,7 @@ const Navbar = (props) => {
   return (
     <nav className="navbar navbar-light bg-light sticky-top">
       <div className="container-fluid justify-content-start">
-        <h1 className="navbar-brand m-1">Gift It :)</h1>
+        <h1 className="navbar-brand text-secondary m-1">Gift It :)</h1>
         <div className="nav m-1">
           <Link className="nav-link" to="/home">
             Home
@@ -41,7 +41,7 @@ const Navbar = (props) => {
           <Link className="nav-link" to={`/edit/${userEmail}`}>
             Edit Profile
           </Link>
-          <button className="btn btn-outline-danger" onClick={logout}>
+          <button className="btn btn-outline-danger ms-3" onClick={logout}>
             Logout
           </button>
         </div>

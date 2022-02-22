@@ -107,7 +107,7 @@ const Home = (props) => {
         setAuthenticated={setAuthenticated}
         setUserEmail={setUserEmail}
       />
-      <div className="row m-2">
+      <div className="row mx-3">
         <div className="col-5">
           <div className="row">
             <UserCard user={user} />

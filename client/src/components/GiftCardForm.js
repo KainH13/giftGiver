@@ -57,8 +57,8 @@ const GiftCardForm = (props) => {
   };
 
   return (
-    <div className="col card m-2">
-      <h2 className="text-primary text-center">{action} Card</h2>
+    <div className="col card ms-2 my-2 p-3 shadow">
+      <h2 className="text-primary text-center text-success">{action} Card</h2>
       <form onSubmit={submitHandler} className="px-3">
         <div className="row">
           <div className="col">
@@ -164,7 +164,7 @@ const GiftCardForm = (props) => {
         <div className="row">
           <div className="col-10">
             <input
-              className="btn btn-outline-primary mb-3"
+              className="btn btn-outline-primary"
               type="submit"
               value="Save"
             />

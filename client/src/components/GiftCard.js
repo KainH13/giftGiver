@@ -61,7 +61,7 @@ const GiftCard = (props) => {
   };
 
   return (
-    <div className="card my-2">
+    <div className="card my-2 shadow">
       {editing ? (
         <GiftCardForm
           card={targetCard}
@@ -75,7 +75,7 @@ const GiftCard = (props) => {
         <div className="card-body">
           <div className="row">
             <div className="col-10">
-              <h3 className="card-title">
+              <h3 className="card-title text-success">
                 {targetCard.firstName} {targetCard.lastName}
               </h3>
             </div>
