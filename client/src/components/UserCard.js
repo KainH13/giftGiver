@@ -6,16 +6,16 @@ const UserCard = (props) => {
   return (
     <div className="card">
       <div className="card-body">
-        <h5 className="card-title">
+        <h3 className="card-title">
           {user.firstName} {user.lastName}
-        </h5>
-        <h4 className="card-subtitle mb-2 text-muted">{user.email}</h4>
-        <p className="card-text">Interests: {user.interests}</p>
+        </h3>
+        <h5 className="card-subtitle mb-2 text-muted">{user.email}</h5>
+        <p className="card-text"><span className="fw-bold">Interests:</span> {user.interests}</p>
         {user.customFields
           ? user.customFields.map((field, index) => {
               return (
                 <p className="card-text" key={index}>
-                  {field.label}: {field.body}
+                  <span className="fw-bold">{field.label}:</span> {field.body}
                 </p>
               );
             })
