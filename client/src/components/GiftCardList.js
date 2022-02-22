@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 
 // components
 import GiftCard from "./GiftCard";

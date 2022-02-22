@@ -89,7 +89,6 @@ module.exports = {
 
   getAllUsers: (req, res) => {
     User.find()
-      .populate("cards", "firstName lastName interests customFields _id")
       .populate("comments", "name body likes _id")
       // returns all Users sorted alphabetically by type
       .collation({ locale: "en", strength: 2 })

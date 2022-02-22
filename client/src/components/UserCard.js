@@ -4,7 +4,7 @@ const UserCard = (props) => {
   const { user } = props;
 
   return (
-    <div className="card">
+    <div className="card my-2">
       <div className="card-body">
         <h3 className="card-title">
           {user.firstName} {user.lastName}

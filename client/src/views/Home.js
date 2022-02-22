@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import UserCard from "../components/UserCard";
 import GiftCardForm from "../components/GiftCardForm";
 import GiftCardList from "../components/GiftCardList";
+import ConnectionSearch from "../components/ConnectionSearch";
 
 const Home = (props) => {
   const { userEmail, setUserEmail, setAuthenticated } = props;
@@ -108,7 +109,12 @@ const Home = (props) => {
       />
       <div className="row m-2">
         <div className="col-5">
-          <UserCard user={user} />
+          <div className="row">
+            <UserCard user={user} />
+          </div>
+          <div className="row">
+            <ConnectionSearch userEmail={userEmail} />
+          </div>
         </div>
         <div className="col-7">
           <div className="row">
