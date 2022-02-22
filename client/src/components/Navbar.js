@@ -28,7 +28,7 @@ const Navbar = (props) => {
   };
 
   return (
-    <nav className="navbar navbar-light bg-light">
+    <nav className="navbar navbar-light bg-light sticky-top">
       <div className="container-fluid justify-content-start">
         <h1 className="navbar-brand m-1">Gift It :)</h1>
         <div className="nav m-1">
