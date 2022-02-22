@@ -10,10 +10,10 @@ const Login = (props) => {
   return (
     <div>
       <div className="navbar d-flex justify-content-start align-items-start">
-        <h1 className="m-1">GiftIt</h1>
-        <h4 className="m-3">Better gifts for everyone!</h4>
+        <h1 className="ms-3 my-1 text-primary">GiftIt :)</h1>
+        <h4 className="m-3 text-secondary">Better gifts for everyone!</h4>
       </div>
-      <h1 className="text-center">Welcome</h1>
+      <h1 className="text-center text-secondary">Welcome to GiftIt</h1>
       <div className="row m-2">
         <RegisterForm />
         <LoginForm setUserEmail={setUserEmail} />

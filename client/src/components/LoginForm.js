@@ -38,7 +38,7 @@ const LoginForm = (props) => {
   };
 
   return (
-    <div className="col card m-2">
+    <div className="col card m-2 shadow">
       <h2 className="text-success">Login</h2>
       <form onSubmit={login}>
         {errorMessage ? (

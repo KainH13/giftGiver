@@ -48,7 +48,7 @@ const RegisterForm = (props) => {
   };
 
   return (
-    <div className="col card m-2">
+    <div className="col card m-2 shadow">
       <h2 className="text-primary">Register</h2>
       {confirmReg ? <h4 className="text-center">{confirmReg}</h4> : null}
       <form onSubmit={register}>
