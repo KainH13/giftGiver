@@ -19,6 +19,7 @@
     "install": "^0.13.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.9",
+    "mongoose-fuzzy-searching": "^2.0.2",
     "npm": "^8.4.0"
   }
 }

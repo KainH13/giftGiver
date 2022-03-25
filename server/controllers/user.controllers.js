@@ -143,4 +143,16 @@ module.exports = {
         res.status(400).json(err);
       });
   },
+
+  searchUsers: (req, res) => {
+    User.fuzzySearch(req.params.searchTerm)
+      .then((results) => {
+        console.log("Search Results: ", results);
+        res.json(results);
+      })
+      .catch((err) => {
+        console.log("Search Failed");
+        res.status(400).json(err);
+      });
+  },
 };

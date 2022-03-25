@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const mongoose_fuzzy_searching = require("mongoose-fuzzy-searching");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -48,6 +49,11 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// enables fuzzy searching for users
+UserSchema.plugin(mongoose_fuzzy_searching, {
+  fields: ["firstName", "lastName"],
+});
 
 // virtual attribute to store password confirmation temporarily
 UserSchema.virtual("confirmPassword")
