@@ -18,6 +18,7 @@ app.use(cookieParser());
 require("./config/mongoose.config");
 require("./routes/user.routes")(app);
 require("./routes/card.routes")(app);
+require("./routes/request.routes")(app);
 require("./routes/comment.routes")(app);
 
 app.listen(port, () => console.log(`Listening on port: ${port}`));
