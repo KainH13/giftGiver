@@ -117,6 +117,24 @@ module.exports = {
       });
   },
 
+  getLoggedInUser: (req, res) => {
+    User.findOne({ _id: req.jwtpayload.id })
+      .populate("cards", "firstName lastName interests customFields _id")
+      .populate("comments", "name body likes _id")
+      .populate(
+        "friends",
+        "firstName lastName email interests customFields _id"
+      )
+      .then((user) => {
+        console.log("logged in user: ", user);
+        res.json(user);
+      })
+      .catch((err) => {
+        console.log("Error in getLoggedInUser");
+        res.status(400).json(err);
+      });
+  },
+
   updateUser: (req, res) => {
     User.findOneAndUpdate({ email: req.params.email }, req.body, {
       new: true,

@@ -27,6 +27,12 @@ const UserSchema = new mongoose.Schema(
       required: [true, "Password is required."],
       minlength: [8, "Password must be 8 characters or longer."],
     },
+    friends: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     interests: {
       type: String,
       default: "",

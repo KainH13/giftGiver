@@ -1,4 +1,5 @@
 const Request = require("../models/requests.model");
+const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 
 module.exports = {
@@ -36,6 +37,70 @@ module.exports = {
         console.log("findAllRequestsByLoggedInUser Error");
         res.status(400).json(err);
       });
+  },
+
+  acceptRequest: (req, res) => {
+    Request.findOneAndUpdate({ _id: req.params.id }, 
+      {
+        "status": "Accepted"
+      }, {
+      new: true,
+      runValidators: true,
+    })
+      .populate("sender", "_id firstName lastName friends")
+      .populate("receiver", "_id firstName lastName friends")
+      .then((acceptedRequest) => {
+        console.log("Request accepted", acceptedRequest);
+        User.findOneAndUpdate(
+          { _id: acceptedRequest.receiver },
+          {
+            $addToSet: { friends: acceptedRequest.sender },
+          },
+          {
+            new: true,
+            useFindAndModify: true,
+          }
+        )
+          .then((updatedUser) => {
+            console.log("Receiver friend list updated successfully");
+            User.findOneAndUpdate(
+              { _id: acceptedRequest.sender },
+              {
+                $addToSet: { friends: acceptedRequest.receiver },
+              },
+              {
+                new: true,
+                useFindAndModify: true,
+              }
+            )
+              .then((otherUser) => {
+                console.log("Sender friend list updates successfully");
+                res.json(acceptedRequest);
+              })
+              .catch((err) => {
+                console.log(err);
+                res.status(400).json;
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(400).json(err);
+          });
+      })
+      .catch((err) => {
+        console.log("Error in acceptRequest: ", err);
+        res.status(400).json(err);
+      });
+  },
+
+  declineRequest: (req, res) => {
+    Request.findOneAndUpdate({ _id: req.params.id }, 
+      {
+        "status": "Declined"
+      }, {
+      new: true,
+      runValidators: true,
+    })
   },
 
   findOneRequest: (req, res) => {
