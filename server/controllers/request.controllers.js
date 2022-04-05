@@ -40,13 +40,16 @@ module.exports = {
   },
 
   acceptRequest: (req, res) => {
-    Request.findOneAndUpdate({ _id: req.params.id }, 
+    Request.findOneAndUpdate(
+      { _id: req.params.id },
       {
-        "status": "Accepted"
-      }, {
-      new: true,
-      runValidators: true,
-    })
+        status: "Accepted",
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    )
       .populate("sender", "_id firstName lastName friends")
       .populate("receiver", "_id firstName lastName friends")
       .then((acceptedRequest) => {
@@ -94,13 +97,26 @@ module.exports = {
   },
 
   declineRequest: (req, res) => {
-    Request.findOneAndUpdate({ _id: req.params.id }, 
+    Request.findOneAndUpdate(
+      { _id: req.params.id },
       {
-        "status": "Declined"
-      }, {
-      new: true,
-      runValidators: true,
-    })
+        status: "Declined",
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    )
+      .populate("sender", "_id firstName lastName friends")
+      .populate("receiver", "_id firstName lastName friends")
+      .then((declinedRequest) => {
+        console.log("Declined Request: ", declinedRequest);
+        res.json(declinedRequest);
+      })
+      .catch((err) => {
+        console.log("Error in declineRequests: ", err);
+        res.status(400).json(err);
+      });
   },
 
   findOneRequest: (req, res) => {

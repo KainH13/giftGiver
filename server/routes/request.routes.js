@@ -22,12 +22,12 @@ module.exports = (app) => {
     RequestController.deleteRequest
   );
   app.put(
-    "/api/requests/accept",
+    "/api/requests/accept/:id",
     authenticate,
     RequestController.acceptRequest
   );
   app.put(
-    "/api/requests/decline",
+    "/api/requests/decline/:id",
     authenticate,
     RequestController.declineRequest
   );
