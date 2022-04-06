@@ -7,9 +7,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // views
 import Login from "./views/Login";
 import Home from "./views/Home";
-import Connections from "./views/Connections";
+import UserSearch from "./views/UserSearch";
 import Edit from "./views/Edit";
-import User from "./views/User";
 
 function App() {
   const [userEmail, setUserEmail] = useState("");
@@ -24,18 +23,12 @@ function App() {
           element={<Home userEmail={userEmail} setUserEmail={setUserEmail} />}
         />
         <Route
-          path="/connections"
-          element={
-            <Connections userEmail={userEmail} setUserEmail={setUserEmail} />
-          }
-        />
-        <Route
           path="/edit/:email"
           element={<Edit userEmail={userEmail} setUserEmail={setUserEmail} />}
         />
         <Route
-          path="/user/:email"
-          element={<User userEmail={userEmail} setUserEmail={setUserEmail} />}
+          path="/search"
+          element={<UserSearch userEmail={userEmail} setUserEmail={setUserEmail} />}
         />
       </Routes>
     </div>

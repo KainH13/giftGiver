@@ -35,11 +35,11 @@ const Navbar = (props) => {
           <Link className="nav-link" to="/home">
             Home
           </Link>
-          {/* <Link className="nav-link" to="/connections">
-            Connections
-          </Link> */}
           <Link className="nav-link" to={`/edit/${userEmail}`}>
             Edit Profile
+          </Link>
+          <Link className="nav-link" to={`/search`}>
+            Search For Connections
           </Link>
           <button className="btn btn-outline-danger ms-3" onClick={logout}>
             Logout
