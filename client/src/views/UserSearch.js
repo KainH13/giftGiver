@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 // components
 import Navbar from "../components/Navbar";
+import UserCard from "../components/UserCard";
 
 const UserSearch = (props) => {
   const { userEmail, setUserEmail } = props;
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState(null);
 
   const navigate = useNavigate();
 
@@ -40,20 +41,32 @@ const UserSearch = (props) => {
       <Navbar userEmail={userEmail} setUserEmail={setUserEmail} />
       <form class="d-flex mx-2">
         <input
-          class="form-control me-2"
+          class="form-control me-2 shadow"
           name="searchTerm"
           type="search"
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button
-          class="btn btn-outline-success"
+          class="btn btn-outline-primary shadow"
           type="submit"
           onClick={searchUsers}
         >
           Search
         </button>
       </form>
+      <div className="mx-2">
+        {searchResults 
+          ? searchResults.map((user, index) => {
+            if (user.email !== userEmail) {
+              return <UserCard user={user} key={index} />;
+            } else {
+              return null;
+            }
+          })
+          : null
+        }
+      </div>
     </div>
   );
 };
