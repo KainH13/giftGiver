@@ -10,7 +10,7 @@ import GiftCardList from "../components/GiftCardList";
 import ConnectionSearch from "../components/ConnectionSearch";
 
 const Home = (props) => {
-  const { userEmail, setUserEmail, setAuthenticated } = props;
+  const { userEmail, setUserEmail } = props;
 
   // setting state for card creation and update
   const [card, setCard] = useState({
@@ -104,7 +104,6 @@ const Home = (props) => {
     <div>
       <Navbar
         userEmail={userEmail}
-        setAuthenticated={setAuthenticated}
         setUserEmail={setUserEmail}
       />
       <div className="row mx-3">

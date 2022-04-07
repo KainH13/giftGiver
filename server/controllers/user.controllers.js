@@ -165,8 +165,19 @@ module.exports = {
   searchUsers: (req, res) => {
     User.fuzzySearch(req.params.searchTerm)
       .then((results) => {
-        console.log("Search Results: ", results);
-        res.json(results);
+        // this prunes results to just firstName, lastName, and email per user before sending to the front end
+        let output = [];
+        for (let i = 0; i < results.length; i++) {
+          let user = {
+            firstName: results[i].firstName,
+            lastName: results[i].lastName,
+            email: results[i].email,
+          };
+          console.log(user);
+          output.push(user);
+        }
+        console.log("Search Results: ", output);
+        res.json(output);
       })
       .catch((err) => {
         console.log("Search Failed");
