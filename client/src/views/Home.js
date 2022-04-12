@@ -107,6 +107,24 @@ const Home = (props) => {
       });
   };
 
+  // custom sorting function to sort alphabetically by a field in an array of objects
+  const dynamicSort = (field) => {
+    let sortOrder = 1;
+
+    if (field[0] === "-") {
+      sortOrder = -1;
+      field = field.substr(1);
+    }
+
+    return function (a, b) {
+      if (sortOrder === -1) {
+        return b[field].localeCompare(a[field]);
+      } else {
+        return a[field].localeCompare(b[field]);
+      }
+    };
+  };
+
   return (
     <div>
       <Navbar userEmail={userEmail} setUserEmail={setUserEmail} />
@@ -116,7 +134,11 @@ const Home = (props) => {
             <UserCard user={user} connectionStatus={"user"} />
           </div>
           <div className="row">
-            <ConnectionSearch connections={connections} setConnections={setConnections} />
+            <ConnectionSearch
+              connections={connections}
+              setConnections={setConnections}
+              dynamicSort={dynamicSort}
+            />
           </div>
         </div>
         <div className="col-7">

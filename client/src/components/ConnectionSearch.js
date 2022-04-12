@@ -1,29 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 // components
 import UserCard from "./UserCard";
 
 const ConnectionSearch = (props) => {
-  const { connections, setConnections } = props;
-
-  // custom sorting function to sort alphabetically by a field in an array of objects
-  // TODO - elevate to Home component so that this sorting helper can be used for cards too
-  const dynamicSort = (field) => {
-    let sortOrder = 1;
-
-    if (field[0] === "-") {
-      sortOrder = -1;
-      field = field.substr(1);
-    }
-
-    return function (a, b) {
-      if (sortOrder === -1) {
-        return b[field].localeCompare(a[field]);
-      } else {
-        return a[field].localeCompare(b[field]);
-      }
-    };
-  };
+  const { connections, setConnections, dynamicSort } = props;
 
   useEffect(() => {
     // sort connections by firstName
