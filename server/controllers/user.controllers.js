@@ -169,6 +169,7 @@ module.exports = {
         let output = [];
         for (let i = 0; i < results.length; i++) {
           let user = {
+            _id: results[i]._id,
             firstName: results[i].firstName,
             lastName: results[i].lastName,
             email: results[i].email,

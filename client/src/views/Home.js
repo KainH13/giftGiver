@@ -35,6 +35,9 @@ const Home = (props) => {
     comments: [],
   });
 
+  // set connections for connection search component
+  const [connections, setConnections] = useState([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,14 +46,15 @@ const Home = (props) => {
       navigate("/login");
     }
 
+    // get logged in user data
     axios
-      .get(`http://localhost:8000/api/users/${userEmail}`, {
+      .get(`http://localhost:8000/api/user`, {
         withCredentials: true,
       })
       .then((res) => {
         console.log(res.data);
         setUser({
-          id: res.data._id,
+          _id: res.data._id,
           firstName: res.data.firstName,
           lastName: res.data.lastName,
           email: res.data.email,
@@ -58,8 +62,11 @@ const Home = (props) => {
           customFields: res.data.customFields,
           cards: res.data.cards,
           comments: res.data.comments,
+          friends: res.data.friends,
         });
         console.log(user);
+        setConnections(res.data.friends);
+        console.log(connections);
         setCard({
           firstName: "",
           lastName: "",
@@ -102,17 +109,14 @@ const Home = (props) => {
 
   return (
     <div>
-      <Navbar
-        userEmail={userEmail}
-        setUserEmail={setUserEmail}
-      />
+      <Navbar userEmail={userEmail} setUserEmail={setUserEmail} />
       <div className="row mx-3">
         <div className="col-5">
           <div className="row">
-            <UserCard user={user} />
+            <UserCard user={user} connectionStatus={"user"} />
           </div>
           <div className="row">
-            <ConnectionSearch userEmail={userEmail} />
+            <ConnectionSearch connections={connections} setConnections={setConnections} />
           </div>
         </div>
         <div className="col-7">

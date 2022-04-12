@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 // components
 import UserCard from "./UserCard";
 
 const ConnectionSearch = (props) => {
-  const { userEmail } = props;
-
-  const [connections, setConnections] = useState([]);
+  const { connections, setConnections } = props;
 
   // custom sorting function to sort alphabetically by a field in an array of objects
+  // TODO - elevate to Home component so that this sorting helper can be used for cards too
   const dynamicSort = (field) => {
     let sortOrder = 1;
 
@@ -28,29 +26,20 @@ const ConnectionSearch = (props) => {
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/users", { withCredentials: true })
-      .then((res) => {
-        console.log("All Users: ", res.data);
-        // sort connections alphabetically
-        let allUsers = res.data;
-        allUsers.sort(dynamicSort("firstName"));
-        setConnections(allUsers);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // sort connections by firstName
+    console.log(connections);
+    let tempArray = connections;
+    tempArray.sort(dynamicSort("firstName"));
+    setConnections(tempArray);
   }, []);
 
   return (
     <div className="card p-2 my-2 shadow">
       <h2 className="text-muted">Connections: </h2>
-      {connections.map((user, index) => {
-        if (user.email !== userEmail) {
-          return <UserCard user={user} key={index} />;
-        } else {
-          return null;
-        }
+      {connections.map((connection, index) => {
+        return (
+          <UserCard user={connection} connectionStatus={"accepted"} key={index} />
+        );
       })}
     </div>
   );
