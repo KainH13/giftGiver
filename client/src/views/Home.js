@@ -25,7 +25,7 @@ const Home = (props) => {
 
   // setting state for displaying user information
   const [user, setUser] = useState({
-    id: "",
+    _id: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -34,6 +34,14 @@ const Home = (props) => {
     cards: [],
     comments: [],
   });
+
+  const updateCardList = (id) => {
+    const updatedCards = user.cards.filter((card) => card._id !== id);
+    console.log("Updated Cards ========================= ", updatedCards);
+    setUser((prevState) => {
+      return { ...prevState, cards: updatedCards };
+    });
+  };
 
   // set connections for connection search component
   const [connections, setConnections] = useState([]);
@@ -64,9 +72,7 @@ const Home = (props) => {
           comments: res.data.comments,
           friends: res.data.friends,
         });
-        console.log(user);
         setConnections(res.data.friends);
-        console.log(connections);
         setCard({
           firstName: "",
           lastName: "",
@@ -74,7 +80,6 @@ const Home = (props) => {
           customFields: [],
           createdBy: res.data._id,
         });
-        console.log(card);
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -90,7 +95,7 @@ const Home = (props) => {
       .then((res) => {
         console.log("Newly Created Card: ", res.data);
         // add card to users cards list for display
-        user.cards = [...user.cards, res.data];
+        setUser({ ...user, cards: [...user.cards, res.data] });
         // clear form fields out for re-use
         setCard({
           firstName: "",
@@ -152,7 +157,11 @@ const Home = (props) => {
             />
           </div>
           <div className="row">
-            <GiftCardList user={user} setUser={setUser} />
+            <GiftCardList
+              user={user}
+              setUser={setUser}
+              updateCardList={updateCardList}
+            />
           </div>
         </div>
       </div>

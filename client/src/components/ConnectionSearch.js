@@ -8,7 +8,6 @@ const ConnectionSearch = (props) => {
 
   useEffect(() => {
     // sort connections by firstName
-    console.log(connections);
     let tempArray = connections;
     tempArray.sort(dynamicSort("firstName"));
     setConnections(tempArray);

@@ -82,16 +82,16 @@ const UserSearch = (props) => {
   return (
     <div>
       <Navbar userEmail={userEmail} setUserEmail={setUserEmail} />
-      <form class="d-flex mx-2">
+      <form className="d-flex mx-2">
         <input
-          class="form-control me-2 shadow"
+          className="form-control me-2 shadow"
           name="searchTerm"
           type="search"
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button
-          class="btn btn-outline-primary shadow"
+          className="btn btn-outline-primary shadow"
           type="submit"
           onClick={searchUsers}
         >
