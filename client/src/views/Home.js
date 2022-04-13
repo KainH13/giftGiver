@@ -61,17 +61,7 @@ const Home = (props) => {
       })
       .then((res) => {
         console.log(res.data);
-        setUser({
-          _id: res.data._id,
-          firstName: res.data.firstName,
-          lastName: res.data.lastName,
-          email: res.data.email,
-          interests: res.data.interests,
-          customFields: res.data.customFields,
-          cards: res.data.cards,
-          comments: res.data.comments,
-          friends: res.data.friends,
-        });
+        setUser(res.data);
         setConnections(res.data.friends);
         setCard({
           firstName: "",
