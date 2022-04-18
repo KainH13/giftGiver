@@ -5,15 +5,14 @@ import axios from "axios";
 import GiftCard from "./GiftCard";
 
 const GiftCardList = (props) => {
-  const { cards, dynamicSort } = props;
+  const { user, dynamicSort, removedCards, setRemovedCards } = props;
 
   const [userCards, setUserCards] = useState([]);
-  const [removedCards, setRemovedCards] = useState([]);
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     // sort cards by firstName
-    let tempArray = cards;
+    let tempArray = user.cards;
     tempArray.sort(dynamicSort("firstName"));
     setUserCards(tempArray);
     console.log("User Cards: ", userCards);
