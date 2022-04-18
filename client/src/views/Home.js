@@ -21,6 +21,7 @@ const Home = (props) => {
     createdBy: "",
   });
 
+  // error handling for gift idea card creation
   const [errors, setErrors] = useState([]);
 
   // setting state for displaying user information
@@ -35,16 +36,14 @@ const Home = (props) => {
     comments: [],
   });
 
-  const updateCardList = (id) => {
-    const updatedCards = user.cards.filter((card) => card._id !== id);
-    console.log("Updated Cards ========================= ", updatedCards);
-    setUser((prevState) => {
-      return { ...prevState, cards: updatedCards };
-    });
-  };
-
   // set connections for connection search component
   const [connections, setConnections] = useState([]);
+
+  // set cards for gift idea card display component
+  const [cards, setCards] = useState([]);
+
+  // loaded state for components that need to wait until certain slower data is loaded to render
+  const [loaded, setLoaded] = useState(false);
 
   const navigate = useNavigate();
 
@@ -62,6 +61,7 @@ const Home = (props) => {
       .then((res) => {
         console.log(res.data);
         setUser(res.data);
+        setCards(res.data.cards);
         setConnections(res.data.friends);
         setCard({
           firstName: "",
@@ -70,6 +70,7 @@ const Home = (props) => {
           customFields: [],
           createdBy: res.data._id,
         });
+        setLoaded(true);
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -85,7 +86,7 @@ const Home = (props) => {
       .then((res) => {
         console.log("Newly Created Card: ", res.data);
         // add card to users cards list for display
-        setUser({ ...user, cards: [...user.cards, res.data] });
+        setCards([...cards, res.data]);
         // clear form fields out for re-use
         setCard({
           firstName: "",
@@ -147,11 +148,9 @@ const Home = (props) => {
             />
           </div>
           <div className="row">
-            <GiftCardList
-              user={user}
-              setUser={setUser}
-              updateCardList={updateCardList}
-            />
+            {loaded ? (
+              <GiftCardList cards={cards} dynamicSort={dynamicSort} />
+            ) : null}
           </div>
         </div>
       </div>
