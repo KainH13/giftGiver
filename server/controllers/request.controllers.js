@@ -27,6 +27,24 @@ module.exports = {
       });
   },
 
+  findAllOpenRequestUidsForLoggedInUser: (req, res) => {
+    Request.find({ receiver: req.jwtpayload.id })
+      .then((requests) => {
+        let output = [];
+        requests.forEach((request) => {
+          if (request.status !== "Declined") {
+            output.push(request.sender);
+          }
+        });
+        console.log("Requests for User by Uids: ", output);
+        res.json(output);
+      })
+      .catch((err) => {
+        console.log("findAllRequestUidsForLoggedInUser Error");
+        res.status(400).json(err);
+      });
+  },
+
   findAllRequestsByLoggedInUser: (req, res) => {
     Request.find({ sender: req.jwtpayload.id })
       .then((requests) => {
@@ -35,6 +53,24 @@ module.exports = {
       })
       .catch((err) => {
         console.log("findAllRequestsByLoggedInUser Error");
+        res.status(400).json(err);
+      });
+  },
+
+  findAllOpenRequestUidsByLoggedInUser: (req, res) => {
+    Request.find({ sender: req.jwtpayload.id })
+      .then((requests) => {
+        let output = [];
+        requests.forEach((request) => {
+          if (request.status !== "Declined") {
+            output.push(request.receiver);
+          }
+        });
+        console.log("Requests by User to Uids: ", output);
+        res.json(output);
+      })
+      .catch((err) => {
+        console.log("findAllRequestUidsByLoggedInUser Error");
         res.status(400).json(err);
       });
   },

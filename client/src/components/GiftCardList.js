@@ -33,9 +33,7 @@ const GiftCardList = (props) => {
       });
   };
 
-  // delete card in db and remove from user cards list so no refresh is required to see the change BROKEN
-  // TODO - when a middle element of the cards array is deleted, the entire card array is emptied on the front end
-  // Middle elements should be able to delete while still showing the rest of the array to the user
+  // delete card in db and add to list of removed cards not to be displayed
   const deleteCard = (targetCard) => {
     console.log("Target Card: ", targetCard);
     axios

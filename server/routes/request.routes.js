@@ -10,9 +10,19 @@ module.exports = (app) => {
     RequestController.findAllRequestsForLoggedInUser
   );
   app.get(
+    "/api/user/requests/for/uid",
+    authenticate,
+    RequestController.findAllOpenRequestUidsForLoggedInUser
+  );
+  app.get(
     "/api/user/requests/by",
     authenticate,
     RequestController.findAllRequestsByLoggedInUser
+  );
+  app.get(
+    "/api/user/requests/by/uid",
+    authenticate,
+    RequestController.findAllOpenRequestUidsByLoggedInUser
   );
   app.get("/api/requests/:id", authenticate, RequestController.findOneRequest);
   app.put("/api/requests/:id", authenticate, RequestController.updateRequest);
