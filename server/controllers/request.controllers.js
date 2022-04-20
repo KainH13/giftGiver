@@ -32,7 +32,7 @@ module.exports = {
       .then((requests) => {
         let output = [];
         requests.forEach((request) => {
-          if (request.status !== "Declined") {
+          if (request.status !== "Accepted" && request.status !== "Declined") {
             output.push(request.sender);
           }
         });
@@ -62,7 +62,7 @@ module.exports = {
       .then((requests) => {
         let output = [];
         requests.forEach((request) => {
-          if (request.status !== "Declined") {
+          if (request.status !== "Accepted"  && request.status !== "Declined") {
             output.push(request.receiver);
           }
         });

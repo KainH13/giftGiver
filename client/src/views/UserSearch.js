@@ -30,7 +30,11 @@ const UserSearch = (props) => {
       })
       .then((res) => {
         console.log("Logged in User: ", res.data);
-        setFriends(res.data.friends);
+        let output = [];
+        res.data.friends.forEach((friend) => {
+          output.push(friend._id);
+        });
+        setFriends(output);
       })
       .catch((err) => {
         console.log(
@@ -41,26 +45,26 @@ const UserSearch = (props) => {
 
     // get requests by user
     axios
-      .get("http://localhost:8000/api/user/requests/for", {
+      .get("http://localhost:8000/api/user/requests/for/uid", {
         withCredentials: true,
       })
       .then((res) => {
         setRequestsForUser(res.data);
       })
       .catch((err) => {
-        console.log("Error in getting requests for user: ", err.response.data);
+        console.log("Error in getting open requests for user: ", err.response.data);
       });
 
     // get requests for user
     axios
-      .get("http://localhost:8000/api/user/requests/by", {
+      .get("http://localhost:8000/api/user/requests/by/uid", {
         withCredentials: true,
       })
       .then((res) => {
         setRequestsByUser(res.data);
       })
       .catch((err) => {
-        console.log("Error in getting requests by user: ", err.response.data);
+        console.log("Error in getting open requests by user: ", err.response.data);
       });
   }, []);
 
@@ -107,45 +111,37 @@ const UserSearch = (props) => {
               }
               // Check the users relationship to the logged in user to determine connection request button functionality
               // TODO -- O(n^2) time complexity in worse cases, should look for a more time efficient solutions to these checks
-              requestsForUser.forEach((request) => {
-                if (user._id === request._id) {
-                  return (
-                    <UserCard
-                      user={user}
-                      connectionStatus={"pendingFor"}
-                      key={index}
-                    />
-                  );
-                }
-              });
-
-              requestsByUser.forEach((request) => {
-                if (user._id === request._id) {
-                  return (
-                    <UserCard
-                      user={user}
-                      connectionStatus={"pendingBy"}
-                      key={index}
-                    />
-                  );
-                }
-              });
-
-              friends.forEach((friend) => {
-                if (user._id === friend._id) {
-                  return (
-                    <UserCard
-                      user={user}
-                      connectionStatus={"accepted"}
-                      key={index}
-                    />
-                  );
-                }
-              });
-
-              return (
-                <UserCard user={user} connectionStatus={"none"} key={index} />
-              );
+              if (requestsForUser.includes(user._id)) {
+                return (
+                  <UserCard
+                    user={user}
+                    connectionStatus={"pendingFor"}
+                    key={index}
+                  />
+                );
+              }
+              if (requestsByUser.includes(user._id)) {
+                return (
+                  <UserCard
+                    user={user}
+                    connectionStatus={"pendingBy"}
+                    key={index}
+                  />
+                );
+              }
+              if (friends.includes(user._id)) {
+                return (
+                  <UserCard
+                    user={user}
+                    connectionStatus={"accepted"}
+                    key={index}
+                  />
+                );
+              } else {
+                return (
+                  <UserCard user={user} connectionStatus={"none"} key={index} />
+                );
+              }
             })
           : null}
       </div>
