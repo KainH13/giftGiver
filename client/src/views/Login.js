@@ -5,7 +5,6 @@ import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 
 const Login = (props) => {
-  const { setUserEmail } = props;
 
   return (
     <div>
@@ -16,7 +15,7 @@ const Login = (props) => {
       <h1 className="text-center text-secondary">Welcome to GiftIt</h1>
       <div className="row m-2">
         <RegisterForm />
-        <LoginForm setUserEmail={setUserEmail} />
+        <LoginForm />
       </div>
     </div>
   );

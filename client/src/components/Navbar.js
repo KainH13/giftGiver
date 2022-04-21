@@ -4,8 +4,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = (props) => {
-  const { userEmail, setUserEmail } = props;
-
   const navigate = useNavigate();
 
   const logout = (e) => {
@@ -19,7 +17,7 @@ const Navbar = (props) => {
       )
       .then((res) => {
         console.log(res);
-        setUserEmail("");
+        localStorage.clear();
         navigate("/login");
       })
       .catch((err) => {
@@ -35,7 +33,10 @@ const Navbar = (props) => {
           <Link className="nav-link" to="/home">
             Home
           </Link>
-          <Link className="nav-link" to={`/edit/${userEmail}`}>
+          <Link
+            className="nav-link"
+            to={`/edit/${localStorage.getItem("userID")}`}
+          >
             Edit Profile
           </Link>
           <Link className="nav-link" to={`/search`}>

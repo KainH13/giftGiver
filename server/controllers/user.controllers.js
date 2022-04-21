@@ -104,7 +104,7 @@ module.exports = {
   },
 
   getOneUser: (req, res) => {
-    User.findOne({ email: req.params.email })
+    User.findOne({ _id: req.params.id })
       .populate("cards", "firstName lastName interests customFields _id")
       .populate("comments", "name body likes _id")
       .then((oneUser) => {
@@ -136,7 +136,7 @@ module.exports = {
   },
 
   updateUser: (req, res) => {
-    User.findOneAndUpdate({ email: req.params.email }, req.body, {
+    User.findOneAndUpdate({ _id: req.params.id }, req.body, {
       new: true,
       runValidators: true,
     })

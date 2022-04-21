@@ -7,8 +7,6 @@ import Navbar from "../components/Navbar";
 import UserInfoForm from "../components/UserInfoForm";
 
 const Edit = (props) => {
-  const { userEmail, setUserEmail } = props;
-
   // saving form inputs
   const [user, setUser] = useState({
     firstName: "",
@@ -24,18 +22,19 @@ const Edit = (props) => {
 
   useEffect(() => {
     // check for user authentication via userEmail state
-    if (userEmail === "") {
+    if (localStorage.getItem("loggedIn") !== "true") {
       navigate("/login");
     }
 
     // populate user data
     axios
-      .get(`http://localhost:8000/api/users/${userEmail}`, {
+      .get(`http://localhost:8000/api/user`, {
         withCredentials: true,
       })
       .then((res) => {
         console.log(res.data);
         setUser({
+          id: res.data._id,
           firstName: res.data.firstName,
           lastName: res.data.lastName,
           interests: res.data.interests,
@@ -51,7 +50,7 @@ const Edit = (props) => {
   // submit handler that's passed to UserInfoForm
   const updateUser = (user) => {
     axios
-      .put(`http://localhost:8000/api/users/${userEmail}`, user, {
+      .put(`http://localhost:8000/api/users/${user.id}`, user, {
         withCredentials: true,
       })
       .then((res) => {
@@ -66,7 +65,7 @@ const Edit = (props) => {
 
   return (
     <div>
-      <Navbar userEmail={userEmail} setUserEmail={setUserEmail} />
+      <Navbar />
       <UserInfoForm user={user} setUser={setUser} onSubmitAction={updateUser} errors={errors} />
     </div>
   );

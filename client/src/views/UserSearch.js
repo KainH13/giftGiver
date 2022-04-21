@@ -19,7 +19,7 @@ const UserSearch = (props) => {
 
   useEffect(() => {
     // check for user authentication via userEmail state
-    if (userEmail === "") {
+    if (localStorage.getItem("loggedIn") !== "true") {
       navigate("/login");
     }
 
@@ -85,7 +85,7 @@ const UserSearch = (props) => {
 
   return (
     <div>
-      <Navbar userEmail={userEmail} setUserEmail={setUserEmail} />
+      <Navbar />
       <form className="d-flex mx-2">
         <input
           className="form-control me-2 shadow"
@@ -106,7 +106,7 @@ const UserSearch = (props) => {
         {searchResults
           ? searchResults.map((user, index) => {
               // don't display logged in user in results
-              if (user.email === userEmail) {
+              if (user._id === localStorage.getItem("userID")) {
                 return null;
               }
               // Check the users relationship to the logged in user to determine connection request button functionality

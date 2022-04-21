@@ -62,7 +62,7 @@ module.exports = {
       .then((requests) => {
         let output = [];
         requests.forEach((request) => {
-          if (request.status !== "Accepted"  && request.status !== "Declined") {
+          if (request.status !== "Accepted" && request.status !== "Declined") {
             output.push(request.receiver);
           }
         });
@@ -168,7 +168,10 @@ module.exports = {
   },
 
   createRequest: (req, res) => {
-    Request.create(req.body)
+    Request.create({
+      sender: req.jwtpayload.id,
+      receiver: req.body.receiver,
+    })
       .then((newlyCreatedRequest) => {
         console.log(newlyCreatedRequest);
         res.json(newlyCreatedRequest);

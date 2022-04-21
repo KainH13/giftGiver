@@ -4,13 +4,11 @@ import { useNavigate } from "react-router-dom";
 // components
 
 const User = (props) => {
-  const { userEmail } = props;
-
   const navigate = useNavigate();
 
   useEffect(() => {
     // check for user authentication via userEmail state
-    if (userEmail === "") {
+    if (localStorage.getItem("loggedIn") !== "true") {
       navigate("/login");
     }
   });

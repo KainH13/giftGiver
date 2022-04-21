@@ -3,8 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = (props) => {
-  const { setUserEmail } = props;
-
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -28,10 +26,12 @@ const LoginForm = (props) => {
       .then((res) => {
         console.log("response: ", res);
         console.log("response data: ", res.data);
-        setUserEmail(email);
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("userID", res.data.userID);
         navigate("/home");
       })
       .catch((err) => {
+        console.log(err);
         console.log(err.response.data);
         setErrorMessage(err.response.data.message);
       });

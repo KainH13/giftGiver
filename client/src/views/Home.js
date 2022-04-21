@@ -10,8 +10,6 @@ import GiftCardList from "../components/GiftCardList";
 import ConnectionSearch from "../components/ConnectionSearch";
 
 const Home = (props) => {
-  const { userEmail, setUserEmail } = props;
-
   // setting state for card creation and update
   const [card, setCard] = useState({
     firstName: "",
@@ -49,7 +47,7 @@ const Home = (props) => {
 
   useEffect(() => {
     // check for user authentication via userEmail state
-    if (userEmail === "") {
+    if (localStorage.getItem("loggedIn") !== "true") {
       navigate("/login");
     }
 
@@ -126,7 +124,7 @@ const Home = (props) => {
 
   return (
     <div>
-      <Navbar userEmail={userEmail} setUserEmail={setUserEmail} />
+      <Navbar />
       <div className="row mx-3">
         <div className="col-5">
           <div className="row">

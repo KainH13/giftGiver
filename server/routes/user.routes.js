@@ -9,8 +9,8 @@ module.exports = (app) => {
   // get and update users
   app.get("/api/user", authenticate, UserController.getLoggedInUser);
   app.get("/api/users", authenticate, UserController.getAllUsers);
-  app.get("/api/users/:email", authenticate, UserController.getOneUser);
-  app.put("/api/users/:email", authenticate, UserController.updateUser);
+  app.get("/api/users/:id", authenticate, UserController.getOneUser);
+  app.put("/api/users/:id", authenticate, UserController.updateUser);
   // delete for testing
   app.delete("/api/users/:id", UserController.deleteUser);
   // user search
