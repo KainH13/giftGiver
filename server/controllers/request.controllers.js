@@ -30,12 +30,18 @@ module.exports = {
   findAllOpenRequestUidsForLoggedInUser: (req, res) => {
     Request.find({ receiver: req.jwtpayload.id })
       .then((requests) => {
-        let output = [];
+        let senders = [];
+        let requestIds = [];
         requests.forEach((request) => {
           if (request.status !== "Accepted" && request.status !== "Declined") {
-            output.push(request.sender);
+            senders.push(request.sender);
+            requestIds.push(request._id);
           }
         });
+        output = {
+          senders: senders,
+          requestIds: requestIds,
+        };
         console.log("Requests for User by Uids: ", output);
         res.json(output);
       })
@@ -60,12 +66,18 @@ module.exports = {
   findAllOpenRequestUidsByLoggedInUser: (req, res) => {
     Request.find({ sender: req.jwtpayload.id })
       .then((requests) => {
-        let output = [];
+        let receivers = [];
+        let requestIds = [];
         requests.forEach((request) => {
           if (request.status !== "Accepted" && request.status !== "Declined") {
-            output.push(request.receiver);
+            receivers.push(request.receiver);
+            requestIds.push(request._id);
           }
         });
+        output = {
+          receivers: receivers,
+          requestIds: requestIds,
+        };
         console.log("Requests by User to Uids: ", output);
         res.json(output);
       })

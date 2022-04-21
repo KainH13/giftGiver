@@ -13,6 +13,9 @@ const UserSearch = (props) => {
   const [requestsForUser, setRequestsForUser] = useState([]);
   const [requestsByUser, setRequestsByUser] = useState([]);
 
+  // for making sure results don't load before state is completely set
+  const [loaded, setLoaded] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,7 +50,7 @@ const UserSearch = (props) => {
         withCredentials: true,
       })
       .then((res) => {
-        setRequestsForUser(res.data);
+        setRequestsForUser(res.data.senders);
       })
       .catch((err) => {
         console.log("Error in getting open requests for user: ", err.response.data);
@@ -59,7 +62,8 @@ const UserSearch = (props) => {
         withCredentials: true,
       })
       .then((res) => {
-        setRequestsByUser(res.data);
+        setRequestsByUser(res.data.receivers);
+        setLoaded(true);
       })
       .catch((err) => {
         console.log("Error in getting open requests by user: ", err.response.data);
@@ -73,8 +77,10 @@ const UserSearch = (props) => {
         withCredentials: true,
       })
       .then((res) => {
+        setLoaded(false); // wait on loading until search results are set into state
         setSearchResults(res.data);
         console.log("Search Results: ", searchResults);
+        setLoaded(true); // reload results once set into state to avoid state bleed from partial loading
       })
       .catch((err) => {
         console.log("Error in user search: ", err.response.data);
@@ -101,7 +107,7 @@ const UserSearch = (props) => {
         </button>
       </form>
       <div className="mx-2">
-        {searchResults
+        {searchResults && loaded
           ? searchResults.map((user, index) => {
               // don't display logged in user in results
               if (user._id === localStorage.getItem("userID")) {

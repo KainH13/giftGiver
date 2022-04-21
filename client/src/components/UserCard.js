@@ -27,6 +27,8 @@ const UserCard = (props) => {
       });
   };
 
+
+
   return (
     <div className="card my-2 shadow">
       <div className="card-body">
@@ -71,7 +73,7 @@ const UserCard = (props) => {
               <button className="btn btn-outline-warning">Pending</button>
             ) : null}
             {status === "accepted" ? (
-              <button className="btn btn-outline-danger">Remove</button>
+              <button className="btn btn-outline-secondary">Connected</button>
             ) : null}
           </div>
         </div>
