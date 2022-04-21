@@ -27,7 +27,7 @@ const LoginForm = (props) => {
         console.log("response: ", res);
         console.log("response data: ", res.data);
         localStorage.setItem("loggedIn", "true");
-        localStorage.setItem("userID", res.data.userID);
+        localStorage.setItem("userID", res.data.userId);
         navigate("/home");
       })
       .catch((err) => {
