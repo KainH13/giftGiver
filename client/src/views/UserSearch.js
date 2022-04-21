@@ -7,8 +7,6 @@ import Navbar from "../components/Navbar";
 import UserCard from "../components/UserCard";
 
 const UserSearch = (props) => {
-  const { userEmail, setUserEmail } = props;
-
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState(null);
   const [friends, setFriends] = useState([]);
