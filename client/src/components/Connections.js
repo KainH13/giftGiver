@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 // components
 import UserCard from "./UserCard";
 
-const ConnectionSearch = (props) => {
+const Connections = (props) => {
   const { connections, setConnections, dynamicSort } = props;
 
   useEffect(() => {
@@ -18,11 +18,11 @@ const ConnectionSearch = (props) => {
       <h2 className="text-muted">Connections: </h2>
       {connections.map((connection, index) => {
         return (
-          <UserCard user={connection} connectionStatus={"accepted"} key={index} />
+          <UserCard user={connection} key={index} />
         );
       })}
     </div>
   );
 };
 
-export default ConnectionSearch;
+export default Connections;

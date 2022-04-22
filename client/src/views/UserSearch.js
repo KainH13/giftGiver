@@ -11,7 +11,9 @@ const UserSearch = (props) => {
   const [searchResults, setSearchResults] = useState(null);
   const [friends, setFriends] = useState([]);
   const [requestsForUser, setRequestsForUser] = useState([]);
+  const [requestIdsForUser, setRequestIdsForUser] = useState([]);
   const [requestsByUser, setRequestsByUser] = useState([]);
+  const [requestIdsByUser, setRequestIdsByUser] = useState([]);
 
   // for making sure results don't load before state is completely set
   const [loaded, setLoaded] = useState(false);
@@ -51,9 +53,13 @@ const UserSearch = (props) => {
       })
       .then((res) => {
         setRequestsForUser(res.data.senders);
+        setRequestIdsForUser(res.data.requestIds);
       })
       .catch((err) => {
-        console.log("Error in getting open requests for user: ", err.response.data);
+        console.log(
+          "Error in getting open requests for user: ",
+          err.response.data
+        );
       });
 
     // get requests for user
@@ -63,10 +69,14 @@ const UserSearch = (props) => {
       })
       .then((res) => {
         setRequestsByUser(res.data.receivers);
+        setRequestIdsByUser(res.data.requestIds);
         setLoaded(true);
       })
       .catch((err) => {
-        console.log("Error in getting open requests by user: ", err.response.data);
+        console.log(
+          "Error in getting open requests by user: ",
+          err.response.data
+        );
       });
   }, []);
 
@@ -116,18 +126,24 @@ const UserSearch = (props) => {
               // Check the users relationship to the logged in user to determine connection request button functionality
               // TODO -- O(n^2) time complexity in worse cases, should look for a more time efficient solutions to these checks
               if (requestsForUser.includes(user._id)) {
+                let requestId =
+                  requestIdsForUser[requestsForUser.indexOf(user._id)];
                 return (
                   <UserCard
                     user={user}
+                    requestId={requestId}
                     connectionStatus={"pendingFor"}
                     key={index}
                   />
                 );
               }
               if (requestsByUser.includes(user._id)) {
+                let requestId =
+                  requestIdsByUser[requestsByUser.indexOf(user._id)];
                 return (
                   <UserCard
                     user={user}
+                    requestId={requestId}
                     connectionStatus={"pendingBy"}
                     key={index}
                   />

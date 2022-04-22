@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const UserCard = (props) => {
-  const { user, connectionStatus } = props;
+  const { user, requestId, connectionStatus } = props;
 
   const [status, setStatus] = useState(connectionStatus);
 

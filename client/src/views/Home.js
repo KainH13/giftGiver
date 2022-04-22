@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar";
 import UserCard from "../components/UserCard";
 import GiftCardForm from "../components/GiftCardForm";
 import GiftCardList from "../components/GiftCardList";
-import ConnectionSearch from "../components/ConnectionSearch";
+import Connections from "../components/Connections";
 
 const Home = (props) => {
   // setting state for card creation and update
@@ -131,7 +131,7 @@ const Home = (props) => {
             <UserCard user={user} connectionStatus={"user"} />
           </div>
           <div className="row">
-            <ConnectionSearch
+            <Connections
               connections={connections}
               setConnections={setConnections}
               dynamicSort={dynamicSort}
