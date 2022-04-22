@@ -6,7 +6,7 @@ const UserCard = (props) => {
 
   const [status, setStatus] = useState(connectionStatus);
 
-  // TODO - Add button logic for request actions
+  // connection request actions
   const createRequest = (e) => {
     axios
       .post(
@@ -27,7 +27,45 @@ const UserCard = (props) => {
       });
   };
 
+  const acceptRequest = (e) => {
+    axios
+      .put(
+        `http://localhost:8000/api/requests/accept/${requestId}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setStatus("accepted");
+      })
+      .catch((err) => {
+        console.log(
+          "Error in accepting connection request: ",
+          err.response.data
+        );
+      });
+  };
 
+  const declineRequest = (e) => {
+    axios
+      .put(
+        `http://localhost:8000/api/requests/decline/${requestId}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setStatus("none");
+      })
+      .catch((err) => {
+        console.log(
+          "Error in declining connection request: ",
+          err.response.data
+        );
+      });
+  };
 
   return (
     <div className="card my-2 shadow">
@@ -65,8 +103,18 @@ const UserCard = (props) => {
             ) : null}
             {status === "pendingFor" ? (
               <div>
-                <button className="btn btn-outline-success mb-2">Accept</button>
-                <button className="btn btn-outline-danger">Decline</button>
+                <button
+                  className="btn btn-outline-success mb-2"
+                  onClick={acceptRequest}
+                >
+                  Accept
+                </button>
+                <button
+                  className="btn btn-outline-danger"
+                  onClick={declineRequest}
+                >
+                  Decline
+                </button>
               </div>
             ) : null}
             {status === "pendingBy" ? (
