@@ -17,6 +17,8 @@ const UserSearch = (props) => {
 
   // for making sure results don't load before state is completely set
   const [loaded, setLoaded] = useState(false);
+  // for reloading the page when a new search is run so that friend status is accurate
+  const [reload, setReload] = useState(0);
 
   const navigate = useNavigate();
 
@@ -78,7 +80,7 @@ const UserSearch = (props) => {
           err.response.data
         );
       });
-  }, []);
+  }, [reload]);
 
   const searchUsers = (e) => {
     e.preventDefault();
@@ -91,6 +93,7 @@ const UserSearch = (props) => {
         setSearchResults(res.data);
         console.log("Search Results: ", searchResults);
         setLoaded(true); // reload results once set into state to avoid state bleed from partial loading
+        setReload(!reload);
       })
       .catch((err) => {
         console.log("Error in user search: ", err.response.data);
@@ -162,7 +165,11 @@ const UserSearch = (props) => {
                     );
                   } else {
                     return (
-                      <UserCard user={user} connectionStatus={"none"} key={index} />
+                      <UserCard
+                        user={user}
+                        connectionStatus={"none"}
+                        key={index}
+                      />
                     );
                   }
                 })
