@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 // components
 import Navbar from "../components/Navbar";
 import UserCard from "../components/UserCard";
+import ConnectionRequests from "../components/ConnectionRequests";
 
 const UserSearch = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -177,7 +178,7 @@ const UserSearch = (props) => {
           </div>
         </div>
         <div className="col-6">
-          <h2 className="text-muted text-center">Connection Requests</h2>
+          <ConnectionRequests />
         </div>
       </div>
     </div>
