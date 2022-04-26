@@ -10,6 +10,11 @@ module.exports = (app) => {
     RequestController.findAllRequestsForLoggedInUser
   );
   app.get(
+    "/api/user/requests/for/populated",
+    authenticate,
+    RequestController.findAllPopulatedRequestsForLoggedInUser
+  );
+  app.get(
     "/api/user/requests/for/uid",
     authenticate,
     RequestController.findAllOpenRequestUidsForLoggedInUser

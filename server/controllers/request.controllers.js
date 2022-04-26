@@ -27,6 +27,19 @@ module.exports = {
       });
   },
 
+  findAllPopulatedRequestsForLoggedInUser: (req, res) => {
+    Request.find({ receiver: req.jwtpayload.id })
+      .populate("sender", "_id firstName lastName email")
+      .then((requests) => {
+        console.log("Requests for User: ", requests);
+        res.json(requests);
+      })
+      .catch((err) => {
+        console.log("findAllRequestsForLoggedInUser Error");
+        res.status(400).json(err);
+      });
+  },
+
   findAllOpenRequestUidsForLoggedInUser: (req, res) => {
     Request.find({ receiver: req.jwtpayload.id })
       .then((requests) => {

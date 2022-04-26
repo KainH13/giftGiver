@@ -40,7 +40,7 @@ const Navbar = (props) => {
             Edit Profile
           </Link>
           <Link className="nav-link" to={`/search`}>
-            Search For Connections
+            Find Connections
           </Link>
           <button className="btn btn-outline-danger ms-3" onClick={logout}>
             Logout

@@ -100,70 +100,78 @@ const UserSearch = (props) => {
   return (
     <div>
       <Navbar />
-      <form className="d-flex mx-2">
-        <input
-          className="form-control me-2 shadow"
-          name="searchTerm"
-          type="search"
-          placeholder="Search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button
-          className="btn btn-outline-primary shadow"
-          type="submit"
-          onClick={searchUsers}
-        >
-          Search
-        </button>
-      </form>
-      <div className="mx-2">
-        {searchResults && loaded
-          ? searchResults.map((user, index) => {
-              // don't display logged in user in results
-              if (user._id === localStorage.getItem("userID")) {
-                return null;
-              }
-              // Check the users relationship to the logged in user to determine connection request button functionality
-              // TODO -- O(n^2) time complexity in worse cases, should look for a more time efficient solutions to these checks
-              if (requestsForUser.includes(user._id)) {
-                let requestId =
-                  requestIdsForUser[requestsForUser.indexOf(user._id)];
-                return (
-                  <UserCard
-                    user={user}
-                    requestId={requestId}
-                    connectionStatus={"pendingFor"}
-                    key={index}
-                  />
-                );
-              }
-              if (requestsByUser.includes(user._id)) {
-                let requestId =
-                  requestIdsByUser[requestsByUser.indexOf(user._id)];
-                return (
-                  <UserCard
-                    user={user}
-                    requestId={requestId}
-                    connectionStatus={"pendingBy"}
-                    key={index}
-                  />
-                );
-              }
-              if (friends.includes(user._id)) {
-                return (
-                  <UserCard
-                    user={user}
-                    connectionStatus={"accepted"}
-                    key={index}
-                  />
-                );
-              } else {
-                return (
-                  <UserCard user={user} connectionStatus={"none"} key={index} />
-                );
-              }
-            })
-          : null}
+      <div className="row mx-3">
+        <div className="col-6">
+          <h2 className="text-muted text-center">Search For Connections</h2>
+          <form className="d-flex mx-2">
+            <input
+              className="form-control me-2 shadow"
+              name="searchTerm"
+              type="search"
+              placeholder="Search"
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button
+              className="btn btn-outline-primary shadow"
+              type="submit"
+              onClick={searchUsers}
+            >
+              Search
+            </button>
+          </form>
+          <div className="mx-2">
+            {searchResults && loaded
+              ? searchResults.map((user, index) => {
+                  // don't display logged in user in results
+                  if (user._id === localStorage.getItem("userID")) {
+                    return null;
+                  }
+                  // Check the users relationship to the logged in user to determine connection request button functionality
+                  // TODO -- O(n^2) time complexity in worse cases, should look for a more time efficient solutions to these checks
+                  if (requestsForUser.includes(user._id)) {
+                    let requestId =
+                      requestIdsForUser[requestsForUser.indexOf(user._id)];
+                    return (
+                      <UserCard
+                        user={user}
+                        requestId={requestId}
+                        connectionStatus={"pendingFor"}
+                        key={index}
+                      />
+                    );
+                  }
+                  if (requestsByUser.includes(user._id)) {
+                    let requestId =
+                      requestIdsByUser[requestsByUser.indexOf(user._id)];
+                    return (
+                      <UserCard
+                        user={user}
+                        requestId={requestId}
+                        connectionStatus={"pendingBy"}
+                        key={index}
+                      />
+                    );
+                  }
+                  if (friends.includes(user._id)) {
+                    return (
+                      <UserCard
+                        user={user}
+                        connectionStatus={"accepted"}
+                        key={index}
+                      />
+                    );
+                  } else {
+                    return (
+                      <UserCard user={user} connectionStatus={"none"} key={index} />
+                    );
+                  }
+                })
+              : null}
+          </div>
+        </div>
+        <div className="col-6">
+          <h2 className="text-muted text-center">Connection Requests</h2>
+        </div>
       </div>
     </div>
   );

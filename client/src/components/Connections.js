@@ -15,7 +15,7 @@ const Connections = (props) => {
 
   return (
     <div className="card p-2 my-2 shadow">
-      <h2 className="text-muted">Connections: </h2>
+      <h2 className="text-muted">Connections</h2>
       {connections.map((connection, index) => {
         return (
           <UserCard user={connection} key={index} />
