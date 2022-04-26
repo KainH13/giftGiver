@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const mongoose_fuzzy_searching = require("mongoose-fuzzy-searching");
+const uniqueValidator = require("mongoose-unique-validator");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -21,11 +22,17 @@ const UserSchema = new mongoose.Schema(
         message: "Please enter a valid email.",
       },
       required: [true, "Email is required."],
+      unique: true,
     },
     password: {
       type: String,
+      validate: {
+        validator: (val) =>
+          /^(?=.*[A-Z])(?=.*[!@#$%^&*\(\)\.])(?=.*[0-9])(?=.*[a-z]).{8,}$/.test(val),
+        message:
+          "Password must be at least 8 characters long and contain at least one lowercase character, uppercase character, number, and special character (!@#$&*).",
+      },
       required: [true, "Password is required."],
-      minlength: [8, "Password must be 8 characters or longer."],
     },
     friends: [
       {
@@ -55,6 +62,12 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// enables unique: true to output an error message like any other mongoose validator
+UserSchema.plugin(uniqueValidator, {
+  message:
+    "An account with that email already exists, please use a unique email address to register.",
+});
 
 // enables fuzzy searching for users
 UserSchema.plugin(mongoose_fuzzy_searching, {
