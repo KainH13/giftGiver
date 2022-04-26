@@ -27,12 +27,18 @@ module.exports = {
       });
   },
 
-  findAllPopulatedRequestsForLoggedInUser: (req, res) => {
+  findAllOpenRequestsForLoggedInUser: (req, res) => {
     Request.find({ receiver: req.jwtpayload.id })
       .populate("sender", "_id firstName lastName email")
       .then((requests) => {
-        console.log("Requests for User: ", requests);
-        res.json(requests);
+        let openRequests = [];
+        requests.forEach((request) => {
+          if (request.status === "Pending") {
+            openRequests.push(request);
+          }
+        });
+        console.log("Open requests for User: ", openRequests);
+        res.json(openRequests);
       })
       .catch((err) => {
         console.log("findAllRequestsForLoggedInUser Error");

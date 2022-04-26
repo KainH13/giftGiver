@@ -12,7 +12,7 @@ module.exports = (app) => {
   app.get(
     "/api/user/requests/for/populated",
     authenticate,
-    RequestController.findAllPopulatedRequestsForLoggedInUser
+    RequestController.findAllOpenRequestsForLoggedInUser
   );
   app.get(
     "/api/user/requests/for/uid",
