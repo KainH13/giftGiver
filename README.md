@@ -1,4 +1,4 @@
-# [GiftIt:)](https://github.com/KainH13/giftIt.git)
+# [GiftIt:)](http://18.144.173.111/)
 
 ### Technology
 Built with Node.js, an Express and MongoDB backend, using a React front end.
