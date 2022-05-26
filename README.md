@@ -1,7 +1,7 @@
 # [GiftIt:)](http://18.144.173.111/)
 
 ### Technology
-Built with Node.js, an Express and MongoDB backend, using a React front end.
+Built with Node.js, an Express and MongoDB backend, using a React front end. Deployed on AWS EC2.
 
 ### Use Case 
 Provides a place to collect gift ideas for friends and family. Users can create contact cards storing their own ideas and make connections with other users to see their current interests and more.
